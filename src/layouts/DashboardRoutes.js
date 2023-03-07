@@ -1,10 +1,11 @@
-import Cookies from 'js-cookie';
-import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import { ChamadasRecebidas } from '../becape-components/Pages/Chamadas/ChamadasRecebidas';
-import { FilaAtendimento } from '../becape-components/Pages/FilaAtendimento';
-import { Historico } from '../becape-components/Pages/Historico';
-import { Home } from '../becape-components/Pages/Home';
+import Cookies from "js-cookie";
+import React from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
+import { ChamadasRecebidas } from "../becape-components/Pages/Chamadas/ChamadasRecebidas";
+import { FilaAtendimento } from "../becape-components/Pages/FilaAtendimento";
+import { Historico } from "../becape-components/Pages/Historico";
+import { Home } from "../becape-components/Pages/Home";
+import { Operador } from "../becape-components/Pages/Operador";
 
 // import Alerts from '../components/bootstrap-components/Alerts';
 // import Avatar from '../components/bootstrap-components/Avatar';
@@ -145,7 +146,7 @@ import { Home } from '../becape-components/Pages/Home';
 // );
 
 const isAuthenticated = () => {
-  const cookieIsValid = Cookies.get('acesso');
+  const cookieIsValid = Cookies.get("acesso");
   if (cookieIsValid) {
     return true;
   }
@@ -154,13 +155,18 @@ const isAuthenticated = () => {
 export const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
-    render={props =>
+    render={(props) =>
       isAuthenticated() ? (
         <Component
         // {...props}
         />
       ) : (
-        <Redirect to={{ pathname: '/authentication/basic/login', state: { from: props.location } }} />
+        <Redirect
+          to={{
+            pathname: "/authentication/basic/login",
+            state: { from: props.location },
+          }}
+        />
       )
     }
   />
@@ -168,10 +174,18 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
 
 const DashboardRoutes = () => (
   <Switch>
-    <PrivateRoute path="/" exact component={Home} />
+    <PrivateRoute
+      path="/"
+      exact
+      component={Cookies.get("perfil") === "adm" ? Home : Operador}
+    />
     <PrivateRoute path="/historico" exact component={Historico} />
     <PrivateRoute path="/chamadas/recebidas" exact component={ChamadasRecebidas} />
-    <PrivateRoute path="/configuracoes/fila-atendimentos" exact component={FilaAtendimento} />
+    <PrivateRoute
+      path="/configuracoes/fila-atendimentos"
+      exact
+      component={FilaAtendimento}
+    />
     {/* <Route path="/feed" exact component={Feed} />
     Pages
     <Route path="/pages/activity" exact component={Activity} />

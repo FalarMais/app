@@ -116,5 +116,17 @@
     "gulp-rtlcss": "^1.4.1",
     "gulp-sourcemaps": "^2.6.5",
     "prettier": "1.17.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { Button, Modal, ModalBody } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MdCall, MdCallEnd } from 'react-icons/md';
-import { FaMicrophone } from 'react-icons/fa';
-import { HiVolumeUp } from 'react-icons/hi';
+import { Button, Modal, ModalBody } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { MdCall, MdCallEnd } from "react-icons/md";
+import { FaMicrophone } from "react-icons/fa";
+import { HiVolumeUp } from "react-icons/hi";
 
-import './modal.css';
-import song from './song.mp3';
+import "./modal.css";
+import song from "./song.mp3";
 
 const ModalChamada = () => {
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
   return (
@@ -21,7 +21,7 @@ const ModalChamada = () => {
       contentClassName="border-0"
       modalClassName="theme-modal"
       backdrop={false}
-      style={{ boxShadow: '33px 32px 32px -3px rgba(0,0,0,0.1)' }}
+      style={{ boxShadow: "33px 32px 32px -3px rgba(0,0,0,0.1)" }}
       size="sm"
     >
       <ModalBody className="p-0">
@@ -29,7 +29,7 @@ const ModalChamada = () => {
           <Button
             size="sm"
             className="close close-circle d-flex flex-center transition-base mt-3 mr-3"
-            style={{ backgroundColor: '#fff' }}
+            style={{ backgroundColor: "#fff" }}
             onClick={() => toggle()}
           >
             <FontAwesomeIcon icon="times" transform="shrink-6 right-0.3 down-0.3" />
@@ -38,10 +38,15 @@ const ModalChamada = () => {
         <audio id="audio" loop autoplay="true">
           <source src={song} type="audio/mpeg" />
         </audio>
-        <div className="rounded-soft-top px-4 py-3" style={{ backgroundColor: '#6E00B0' }}>
+        <div
+          className="rounded-soft-top px-4 py-3"
+          style={{ backgroundColor: "#6E00B0" }}
+        >
           <div className="d-flex flex-column justify-content-center">
             <span className="text-center text-white">DESCONHECIDO</span>
-            <span className="text-center text-white fw-bold fs-3 font-weight-bold">0175750007</span>
+            <span className="text-center text-white fw-bold fs-3 font-weight-bold">
+              0175750007
+            </span>
           </div>
         </div>
 
