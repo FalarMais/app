@@ -55,7 +55,7 @@ const LoginForm = ({ setRedirect, hasLabel, layout }) => {
       <FormGroup>
         {hasLabel && <Label>Password</Label>}
         <Input
-          placeholder={!hasLabel ? "Senhaa" : ""}
+          placeholder={!hasLabel ? "Senha" : ""}
           value={password}
           onChange={({ target }) => setPassword(target.value)}
           type="password"
