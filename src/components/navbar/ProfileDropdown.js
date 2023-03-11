@@ -1,9 +1,14 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { DropdownItem, DropdownMenu, DropdownToggle, Dropdown } from 'reactstrap';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  Dropdown
+} from "reactstrap";
 // import team3 from '../../assets/img/team/3.jpg';
-import Avatar from '../common/Avatar';
+import Avatar from "../common/Avatar";
 
 const ProfileDropdown = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -24,11 +29,15 @@ const ProfileDropdown = () => {
       }}
     >
       <DropdownToggle nav className="pr-0">
-        <Avatar src={'http://falarmais.com.br/wp-content/uploads/2022/07/logo-stick-2.png'} />
+        <Avatar
+          src={
+            "http://falarmais.com.br/wp-content/uploads/2022/07/logo-stick-2.png"
+          }
+        />
       </DropdownToggle>
       <DropdownMenu right className="dropdown-menu-card">
         <div className="bg-white rounded-soft py-2">
-          <DropdownItem className="font-weight-bold text-warning" href="#!">
+          {/* <DropdownItem className="font-weight-bold text-warning" href="#!">
             <FontAwesomeIcon icon="crown" className="mr-1" />
             <span>Go Pro</span>
           </DropdownItem>
@@ -41,7 +50,7 @@ const ProfileDropdown = () => {
           <DropdownItem divider />
           <DropdownItem tag={Link} to="/pages/settings">
             Settings
-          </DropdownItem>
+          </DropdownItem> */}
           <DropdownItem tag={Link} to="/authentication/basic/logout">
             Logout
           </DropdownItem>
