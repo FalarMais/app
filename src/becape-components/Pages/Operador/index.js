@@ -1,8 +1,6 @@
 import React from "react";
-import { registrarRotas } from "../../../routes";
 import { EmChamada } from "../../Components/EmChamada";
 import { FilaChamadas } from "../../Components/FilaChamadas";
-import { TabelaChamados } from "../../Components/TabelaChamados";
 import { Historico } from "../Historico";
 
 const Operador = () => {
