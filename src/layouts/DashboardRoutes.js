@@ -1,10 +1,7 @@
 import Cookies from "js-cookie";
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import {
-  NovoCadastro,
-  PageCadastrarCliente
-} from "../becape-components/Pages/CadastrarCliente";
+import { NovoCadastro } from "../becape-components/Pages/CadastrarCliente";
 import { ChamadasRecebidas } from "../becape-components/Pages/Chamadas/ChamadasRecebidas";
 import { FilaAtendimento } from "../becape-components/Pages/FilaAtendimento";
 import { Historico } from "../becape-components/Pages/Historico";
