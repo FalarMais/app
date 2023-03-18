@@ -1,11 +1,16 @@
 import Cookies from "js-cookie";
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
+import {
+  NovoCadastro,
+  PageCadastrarCliente
+} from "../becape-components/Pages/CadastrarCliente";
 import { ChamadasRecebidas } from "../becape-components/Pages/Chamadas/ChamadasRecebidas";
 import { FilaAtendimento } from "../becape-components/Pages/FilaAtendimento";
 import { Historico } from "../becape-components/Pages/Historico";
 import { Home } from "../becape-components/Pages/Home";
 import { Operador } from "../becape-components/Pages/Operador";
+import { PesquisarCadastro } from "../becape-components/Pages/PesquisarCadastro";
 
 // import Alerts from '../components/bootstrap-components/Alerts';
 // import Avatar from '../components/bootstrap-components/Avatar';
@@ -155,7 +160,7 @@ const isAuthenticated = () => {
 export const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
-    render={(props) =>
+    render={props =>
       isAuthenticated() ? (
         <Component
         // {...props}
@@ -164,7 +169,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => (
         <Redirect
           to={{
             pathname: "/authentication/basic/login",
-            state: { from: props.location },
+            state: { from: props.location }
           }}
         />
       )
@@ -179,13 +184,26 @@ const DashboardRoutes = () => (
       exact
       component={Cookies.get("perfil") === "adm" ? Home : Operador}
     />
+
     <PrivateRoute path="/historico" exact component={Historico} />
-    <PrivateRoute path="/chamadas/recebidas" exact component={ChamadasRecebidas} />
+    <PrivateRoute
+      path="/chamadas/recebidas"
+      exact
+      component={ChamadasRecebidas}
+    />
     <PrivateRoute
       path="/configuracoes/fila-atendimentos"
       exact
       component={FilaAtendimento}
     />
+
+    <PrivateRoute path="/novo-cadastro" exact component={NovoCadastro} />
+    <PrivateRoute
+      path="/pesquisar-cadastro"
+      exact
+      component={PesquisarCadastro}
+    />
+
     {/* <Route path="/feed" exact component={Feed} />
     Pages
     <Route path="/pages/activity" exact component={Activity} />
