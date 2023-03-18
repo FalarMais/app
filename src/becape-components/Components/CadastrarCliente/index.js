@@ -1,6 +1,6 @@
 import React from "react";
 
-const CadastrarCliente = ({ telefone }) => {
+const FormCadastrarCliente = ({ telefone }) => {
   return (
     <div className="d-flex flex-column">
       <h5 className="mb-3">Cadastar Cliente</h5>
@@ -48,4 +48,4 @@ const CadastrarCliente = ({ telefone }) => {
   );
 };
 
-export { CadastrarCliente };
+export { FormCadastrarCliente };

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FormCadastrarCliente } from "../CadastrarCliente";
 
 const chamadaOBJ1 = {
   id: 0,
@@ -80,7 +81,7 @@ const CadastrarCliente = ({ chamada }) => {
         <h4>Telefone: {chamada.telefone}</h4>
       </div>
 
-      <CadastrarCliente telefone={chamada.telefone} />
+      <FormCadastrarCliente telefone={chamada.telefone} />
       <button className="btn btn-success">Cadastrar</button>
     </div>
   );
