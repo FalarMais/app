@@ -397,13 +397,13 @@ export function registrarRotas() {
     novoCadastro = {
       name: "Novo Cadastro",
       exact: true,
-      to: "/213213"
+      to: "/novo-cadastro"
     };
 
     pesquisarCadastro = {
       name: "Pesquisar Cadastro",
       exact: true,
-      to: "/213213"
+      to: "/pesquisar-cadastro"
     };
 
     rotas = [novoCadastro, pesquisarCadastro];
