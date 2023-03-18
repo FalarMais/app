@@ -82,7 +82,6 @@ const CadastrarCliente = ({ chamada }) => {
       </div>
 
       <FormCadastrarCliente telefone={chamada.telefone} />
-      <button className="btn btn-success">Cadastrar</button>
     </div>
   );
 };
