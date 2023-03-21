@@ -11,6 +11,7 @@ const Operador = () => {
         <Historico />
       </div>
       <div className="col-12 col-md-3">
+        {/* <TabelaChamados /> */}
         <FilaChamadas />
       </div>
     </div>
