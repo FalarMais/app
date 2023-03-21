@@ -27,16 +27,40 @@ const PesquisarCadastro = () => {
         {
           data: "2023-03-31",
           produtos: [
-            { nome: "Fralda", quantidade: 3, preco: 25 },
-            { nome: "Pasta", quantidade: 1, preco: 3 }
+            {
+              img:
+                "https://drogariasp.vteximg.com.br/arquivos/ids/558310-1000-1000/613355---fralda-pampers-confort-sec-xg-62-unidades.jpg",
+              nome: "Fralda",
+              quantidade: 3,
+              preco: 25
+            },
+            {
+              img:
+                "https://a-static.mlcdn.com.br/800x560/pasta-de-dente-sorriso-50g/dona/100370/5cf313873d626cf6e6bdb9c82c7cc2f9.jpg",
+              nome: "Pasta",
+              quantidade: 1,
+              preco: 3
+            }
           ]
         },
 
         {
           data: "2023-05-31",
           produtos: [
-            { nome: "Fralda", quantidade: 3, preco: 25 },
-            { nome: "Pasta", quantidade: 1, preco: 3 }
+            {
+              img:
+                "https://drogariasp.vteximg.com.br/arquivos/ids/558310-1000-1000/613355---fralda-pampers-confort-sec-xg-62-unidades.jpg",
+              nome: "Fralda",
+              quantidade: 3,
+              preco: 25
+            },
+            {
+              img:
+                "https://a-static.mlcdn.com.br/800x560/pasta-de-dente-sorriso-50g/dona/100370/5cf313873d626cf6e6bdb9c82c7cc2f9.jpg",
+              nome: "Pasta",
+              quantidade: 1,
+              preco: 3
+            }
           ]
         }
       ]
@@ -115,7 +139,9 @@ const PesquisarCadastro = () => {
                     <tbody>
                       {historico.produtos.map((c, indiceproduto) => (
                         <tr key={indiceproduto}>
-                          <td />
+                          <td>
+                            <img src={c.img} width="100" alt="" />
+                          </td>
                           <td>{c.nome}</td>
                           <td>{c.preco}</td>
                           <td>{c.quantidade}</td>
