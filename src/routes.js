@@ -368,6 +368,9 @@ export let filaEspera = {
 export let chamadas = {
   name: ""
 };
+export let ramais = {
+  name: ""
+};
 
 export let configuracao = {
   name: ""
@@ -417,12 +420,12 @@ export function registrarRotas() {
       icon: "copy"
     };
 
-    filaEspera = {
-      name: "Fila de Espera",
-      to: "/fila-de-espera",
-      exact: true,
-      icon: "comments"
-    };
+    // filaEspera = {
+    //   name: "Fila de Espera",
+    //   to: "/fila-de-espera",
+    //   exact: true,
+    //   icon: "comments"
+    // };
 
     //  ult [
     //   historico,
@@ -438,6 +441,16 @@ export function registrarRotas() {
         { to: "/chamadas/recebidas", name: "Chamadas Recebidas" },
         { to: "/chamadas/perdidas", name: "Chamadas Perdidas" },
         { to: "/chamadas/realizadas", name: "Chamadas Realizadas" }
+      ]
+    };
+
+    ramais = {
+      name: "Ramais",
+      icon: "comments",
+      exact: true,
+      children: [
+        { to: "/ramais/geral", name: "Geral" },
+        { to: "/ramais/cadastro-ramais", name: "Cadastro de Ramais" }
       ]
     };
 
@@ -463,17 +476,25 @@ export function registrarRotas() {
       name: "Conta",
       icon: "tools",
       exact: true,
-      to: "/123"
+      to: "/conta"
     };
 
-    cadastros = {
-      name: "Cadastros",
-      icon: "copy",
-      exact: true,
-      to: "/1234"
-    };
+    // cadastros = {
+    //   name: "Cadastros",
+    //   icon: "copy",
+    //   exact: true,
+    //   to: "/1234"
+    // };
 
-    rotas = [chamadas, configuracao, conta, cadastros, historico, filaEspera];
+    rotas = [
+      chamadas,
+      ramais,
+      configuracao,
+      conta,
+      cadastros,
+      historico,
+      filaEspera
+    ];
   }
 
   return rotas;
