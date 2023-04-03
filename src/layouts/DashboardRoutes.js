@@ -8,6 +8,7 @@ import { Historico } from "../becape-components/Pages/Historico";
 import { Home } from "../becape-components/Pages/Home";
 import { Operador } from "../becape-components/Pages/Operador";
 import { PesquisarCadastro } from "../becape-components/Pages/PesquisarCadastro";
+import { RamaisGeral } from "../becape-components/Pages/RamaisGeral";
 
 // import Alerts from '../components/bootstrap-components/Alerts';
 // import Avatar from '../components/bootstrap-components/Avatar';
@@ -200,6 +201,7 @@ const DashboardRoutes = () => (
       exact
       component={PesquisarCadastro}
     />
+    <PrivateRoute path="/ramais/geral" exact component={RamaisGeral} />
 
     {/* <Route path="/feed" exact component={Feed} />
     Pages

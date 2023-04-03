@@ -28,11 +28,7 @@ const ProfileDropdown = () => {
       }}
     >
       <DropdownToggle nav className="pr-0">
-        <Avatar
-          src={
-            "http://falarmais.com.br/wp-content/uploads/2022/07/logo-stick-2.png"
-          }
-        />
+        <Avatar src={"/logo2.png"} />
       </DropdownToggle>
       <DropdownMenu right className="dropdown-menu-card">
         <div className="bg-white rounded-soft py-2">
