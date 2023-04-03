@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
 // import { useHistory } from 'react-router-dom';
 // import { Card, CardBody } from 'reactstrap';
@@ -6,158 +6,177 @@ import React, { useEffect } from 'react';
 // import FalconCardHeader from '../../../components/common/FalconCardHeader';
 
 // import { HiOutlineArrowNarrowLeft, HiOutlineArrowNarrowRight } from 'react-icons/hi';
-import './tabela.css';
-import { useState } from 'react';
+import "./tabela.css";
+import { useState } from "react";
 
-import { MdDelete } from 'react-icons/md';
-import { FaPlay } from 'react-icons/fa';
+import { MdDelete } from "react-icons/md";
+import { FaPlay } from "react-icons/fa";
 
 const TabelaChamados = ({ tipo }) => {
   const [data, setData] = useState([]);
 
   const chamadas = [
     {
-      codigo: '0001',
-      operador: 'Michelle',
-      ramal: '1002',
-      situacao: 'RECEBIDAS',
-      falando: '2194002-8922',
-      tespera: '0:30',
-      dchamada: '2:30'
+      codigo: "0001",
+      operador: "Michelle",
+      ramal: "1002",
+      situacao: "RECEBIDAS",
+      falando: "2194002-8922",
+      tespera: "0:30",
+      dchamada: "2:30"
     },
     {
-      codigo: '0002',
-      operador: 'Amanda',
-      ramal: '1002',
-      situacao: 'RECEBIDAS',
-      falando: '2194002-8922',
-      tespera: '0:30',
-      dchamada: '2:30'
+      codigo: "0002",
+      operador: "Amanda",
+      ramal: "1002",
+      situacao: "RECEBIDAS",
+      falando: "2194002-8922",
+      tespera: "0:30",
+      dchamada: "2:30"
     },
     {
-      codigo: '0003',
-      operador: 'Rosana',
-      ramal: '1002',
-      situacao: 'RECEBIDAS',
-      falando: '2194002-8922',
-      tespera: '0:30',
-      dchamada: '2:30'
+      codigo: "0003",
+      operador: "Rosana",
+      ramal: "1002",
+      situacao: "RECEBIDAS",
+      falando: "2194002-8922",
+      tespera: "0:30",
+      dchamada: "2:30"
     },
     {
-      codigo: '0004',
-      operador: 'Costa',
-      ramal: '1002',
-      situacao: 'RECEBIDAS',
-      falando: '2194002-8922',
-      tespera: '0:30',
-      dchamada: '2:30'
+      codigo: "0004",
+      operador: "Costa",
+      ramal: "1002",
+      situacao: "RECEBIDAS",
+      falando: "2194002-8922",
+      tespera: "0:30",
+      dchamada: "2:30"
     },
     {
-      codigo: '0005',
-      operador: 'Patricia',
-      ramal: '1002',
-      situacao: 'RECEBIDAS',
-      falando: '2194002-8922',
-      tespera: '0:30',
-      dchamada: '2:30'
-    },
-
-    {
-      codigo: '0005',
-      operador: 'Patricia',
-      ramal: '1002',
-      situacao: 'EM PAUSA',
-      falando: '2194002-8922',
-      tespera: '0:30',
-      dchamada: '2:30'
-    },
-    {
-      codigo: '0005',
-      operador: 'Patricia',
-      ramal: '1002',
-      situacao: 'EM PAUSA',
-      falando: '2194002-8922',
-      tespera: '0:30',
-      dchamada: '2:30'
+      codigo: "0005",
+      operador: "Patricia",
+      ramal: "1002",
+      situacao: "RECEBIDAS",
+      falando: "2194002-8922",
+      tespera: "0:30",
+      dchamada: "2:30"
     },
 
     {
-      codigo: '0005',
-      operador: 'Patricia',
-      ramal: '1002',
-      situacao: 'CONCLUIDA',
-      falando: '2194002-8922',
-      tespera: '0:30',
-      dchamada: '2:30'
+      codigo: "0005",
+      operador: "Patricia",
+      ramal: "1002",
+      situacao: "EM PAUSA",
+      falando: "2194002-8922",
+      tespera: "0:30",
+      dchamada: "2:30"
     },
     {
-      codigo: '0005',
-      operador: 'Patricia',
-      ramal: '1002',
-      situacao: 'PERDIDA',
-      falando: '2194002-8922',
-      tespera: '0:30',
-      dchamada: '2:30'
+      codigo: "0005",
+      operador: "Patricia",
+      ramal: "1002",
+      situacao: "EM PAUSA",
+      falando: "2194002-8922",
+      tespera: "0:30",
+      dchamada: "2:30"
+    },
+
+    {
+      codigo: "0005",
+      operador: "Patricia",
+      ramal: "1002",
+      situacao: "CONCLUIDA",
+      falando: "2194002-8922",
+      tespera: "0:30",
+      dchamada: "2:30"
     },
     {
-      codigo: '0005',
-      operador: 'Patricia',
-      ramal: '1002',
-      situacao: 'PERDIDA',
-      falando: '2194002-8922',
-      tespera: '0:30',
-      dchamada: '2:30'
+      codigo: "0005",
+      operador: "Patricia",
+      ramal: "1002",
+      situacao: "PERDIDA",
+      falando: "2194002-8922",
+      tespera: "0:30",
+      dchamada: "2:30"
     },
     {
-      codigo: '0005',
-      operador: 'Patricia',
-      ramal: '1002',
-      situacao: 'EM ATENDIMENTO',
-      falando: '2194002-8922',
-      tespera: '0:30',
-      dchamada: '2:30'
+      codigo: "0005",
+      operador: "Patricia",
+      ramal: "1002",
+      situacao: "PERDIDA",
+      falando: "2194002-8922",
+      tespera: "0:30",
+      dchamada: "2:30"
+    },
+    {
+      codigo: "0005",
+      operador: "Patricia",
+      ramal: "1002",
+      situacao: "EM ATENDIMENTO",
+      falando: "2194002-8922",
+      tespera: "0:30",
+      dchamada: "2:30"
     }
   ];
 
   useEffect(() => {
     setTimeout(() => {
       window
-        .$('#example')
+        .$("#example")
         .DataTable()
         .destroy();
 
-      const novaData = tipo ? chamadas.filter(c => c.situacao === tipo) : chamadas;
+      const novaData = tipo
+        ? chamadas.filter(c => c.situacao === tipo)
+        : chamadas;
       setData(novaData);
     }, 1000);
     // eslint-disable-next-line
   }, [tipo]);
 
   useEffect(() => {
-    window.$('#example').DataTable({
-      responsive: true,
-      rowReorder: {
-        selector: 'td:nth-child(2)'
-      }
-    });
+    console.log("render");
+    if (data.length > 0) {
+      window.$("#example").DataTable({
+        columns: [
+          { data: "Código" },
+          { data: "Operador" },
+          { data: "Ramal" },
+          { data: "Situação" },
+          { data: "Falando com" },
+          { data: "T.Espera" },
+          { data: "D.Chamada" },
+          { data: "" }
+        ],
+        responsive: true,
+        rowReorder: {
+          selector: "td:nth-child(2)"
+        },
+        language: {
+          url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
+        }
+      });
+    }
   }, [data]);
 
   return (
-    <table id="example" className="display" style={{ width: '100%' }}>
-      <thead>
-        <tr>
-          <th>Código</th>
-          <th>Operador</th>
-          <th>Ramal</th>
-          <th>Situação</th>
-          <th>Falando com</th>
-          <th>T.Espera</th>
-          <th>D.Chamada</th>
-          <th />
-        </tr>
-      </thead>
-      <tbody>
-        {data
-          ? data.map((d, i) => (
+    <div style={{ minHeight: 500 }}>
+      {data.length > 0 ? (
+        <table id="example" className="display" style={{ width: "100%" }}>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Operador</th>
+              <th>Ramal</th>
+              <th>Situação</th>
+              <th>Falando com</th>
+              <th>T.Espera</th>
+              <th>D.Chamada</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((d, i) => (
               <tr key={i}>
                 <td>{d.codigo}</td>
                 <td>{d.operador}</td>
@@ -177,10 +196,13 @@ const TabelaChamados = ({ tipo }) => {
                   </div>
                 </td>
               </tr>
-            ))
-          : null}
-      </tbody>
-    </table>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <h1>CARREGANDO</h1>
+      )}
+    </div>
   );
 };
 
