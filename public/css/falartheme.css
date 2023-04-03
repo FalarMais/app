@@ -1,0 +1,43 @@
+.bg-falar {
+  background-color: #6F00B4;
+}
+
+.text-falar {
+  color: #6F00B4;
+}
+
+.btn-falar {
+  color: #fff !important;
+  background-color: #6F00B4 !important;
+
+}
+
+.btn-outline-falar{color:#6F00B4 !important; border: solid 1px #6F00B4 !important}
+.btn-outline-falar:hover{color:#fff !important;background-color:#6F00B4 !important;
+}
+.table.dataTable thead {
+  background-color: #6F00B4
+}
+
+table.dataTable th {
+  color: #6F00B4
+}
+
+table.dataTable.display tbody tr:hover {
+  cursor: pointer;
+}
+table.dataTable.display tbody tr.odd > .sorting_1 {
+  background-color: transparent;
+}
+
+table.dataTable.display tbody tr.odd {
+  background-color: #fff;
+}
+
+table.dataTable.display tbody tr.even > .sorting_1 {
+  background-color: transparent;
+}
+
+table.dataTable.display tbody tr.even {
+  background-color: #f38c007a;
+}
