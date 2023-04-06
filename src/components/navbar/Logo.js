@@ -4,7 +4,7 @@ import classNames from "classnames";
 import { Link } from "react-router-dom";
 // import logo from '../../assets/img/illustrations/falcon.png';
 
-const Logo = ({ at, width, className, ...rest }) => {
+const Logo = ({ at, logo, width, width_logo, className, ...rest }) => {
   return (
     <Link
       to="/"
@@ -27,9 +27,9 @@ const Logo = ({ at, width, className, ...rest }) => {
         )}
       >
         <img
-          style={{ width: 160, padding: 5 }}
+          style={{ width: width_logo ? width_logo : 160, padding: 5 }}
           className="mr-2 rounded"
-          src="/logo.png"
+          src={logo ? logo : "/logo.png "}
           alt="Logo"
           width={width}
         />
