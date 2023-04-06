@@ -1,5 +1,4 @@
 import React from "react";
-// import PaymentsLineChart from '../../../components/dashboard/PaymentsLineChart';
 import { Cards } from "./Cards";
 import {
   AreaChart,
@@ -10,7 +9,6 @@ import {
   Tooltip,
   ResponsiveContainer
 } from "recharts";
-// import { ModalChamada } from '../../Components/ModalChamada/ModalChamada';
 import { TabelaChamados } from "../../Components/TabelaChamados";
 import { Card } from "reactstrap";
 const Home = () => {
