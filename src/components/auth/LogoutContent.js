@@ -17,7 +17,7 @@ const LogoutContent = ({ layout, titleTag: TitleTag }) => {
       <TitleTag>Você foi deslogado com sucesso!</TitleTag>
       <Button
         tag={Link}
-        color="primary"
+        color="falar"
         size="sm"
         className="mt-3"
         to={`/authentication/${layout}/login`}

@@ -62,7 +62,7 @@ const LoginForm = ({ setRedirect, hasLabel, layout }) => {
         />
       </FormGroup>
       <FormGroup>
-        <Button color="primary" block className="mt-3" disabled={isDisabled}>
+        <Button color="falar" block className="mt-3" disabled={isDisabled}>
           Login
         </Button>
       </FormGroup>
