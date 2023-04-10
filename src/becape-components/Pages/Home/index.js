@@ -60,7 +60,7 @@ const Home = () => {
   return (
     <div>
       <div className="bg-light px-2 py-1 my-2">
-        <span>Filtrar Tempo:</span>
+        <span className="pr-2">Filtrar Tempo:</span>
         <select name="" id="" className="mr-2">
           <option value="">Hoje</option>
           <option value="">Ontem</option>
