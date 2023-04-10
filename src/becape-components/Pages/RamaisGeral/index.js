@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
+import { MdDelete } from "react-icons/md";
 import { useHistory } from "react-router-dom";
 import { Card, CardBody } from "reactstrap";
 import FalconCardHeader from "../../../components/common/FalconCardHeader";
+import { FormRamal } from "../../Components/FormRamal";
 
 const RamaisGeral = () => {
   const [data, setData] = useState([]);
@@ -65,7 +67,7 @@ const RamaisGeral = () => {
         </button>
       </FalconCardHeader>
       <CardBody>
-        <div className="mb-2 d-flex justify-content-between">
+        <div className="mb-4 d-flex justify-content-between">
           <h5 className="mb-2">Lista de ramais</h5>
           <div className="btn btn-falar" onClick={() => setAddRamal(!addRamal)}>
             {" "}
@@ -73,55 +75,9 @@ const RamaisGeral = () => {
           </div>
         </div>
         {addRamal ? (
-          <div className="my-5">
-            <div className="my-4">
-              <div className="">
-                <div className="col-4">
-                  <div>
-                    <label htmlFor="">Ramal</label>
-                    <input type="text" className="form-control" />
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-4">
-                  <div>
-                    <label htmlFor="">Nome Utilizador</label>
-                    <input type="text" className="form-control" />
-                  </div>
-                </div>
-                <div className="col-4">
-                  <div>
-                    <label htmlFor="">Numero do ramal</label>
-                    <input type="text" className="form-control" />
-                  </div>
-                </div>
-                <div className="col-4">
-                  <div>
-                    <label htmlFor="">Tipo do Ramal</label>
-                    <input type="text" className="form-control" />
-                  </div>
-                </div>
-
-                <div className="col-4">
-                  <div>
-                    <label htmlFor="">Senha</label>
-                    <input type="text" className="form-control" />
-                  </div>
-                </div>
-
-                <div className="col-4">
-                  <div>
-                    <label htmlFor="">Call-limit</label>
-                    <input type="text" className="form-control" />
-                  </div>
-                </div>
-
-                <button className="btn btn-outline-falar my-2">
-                  Adicionar
-                </button>
-              </div>
-            </div>
+          <div className="mb-3">
+            <FormRamal tipo="add" />
+            <button className="btn btn-outline-falar my-2">Adicionar</button>
           </div>
         ) : null}
 
@@ -167,43 +123,10 @@ const RamaisGeral = () => {
                   <div className="d-flex justify-content-between">
                     <h1>Código: {ramal.codigo}</h1>
                     <span className="text-danger font-weight-bold">
-                      Deletar
+                      <MdDelete size={30} />
                     </span>
                   </div>
-                  <div className="row">
-                    <div className="col-4">
-                      <div>
-                        <label htmlFor="">Nome Utilizador</label>
-                        <input type="text" className="form-control" />
-                      </div>
-                    </div>
-                    <div className="col-4">
-                      <div>
-                        <label htmlFor="">Numero do ramal</label>
-                        <input type="text" className="form-control" />
-                      </div>
-                    </div>
-                    <div className="col-4">
-                      <div>
-                        <label htmlFor="">Tipo do Ramal</label>
-                        <input type="text" className="form-control" />
-                      </div>
-                    </div>
-
-                    <div className="col-4">
-                      <div>
-                        <label htmlFor="">Senha</label>
-                        <input type="text" className="form-control" />
-                      </div>
-                    </div>
-
-                    <div className="col-4">
-                      <div>
-                        <label htmlFor="">Call-limit</label>
-                        <input type="text" className="form-control" />
-                      </div>
-                    </div>
-                  </div>
+                  <FormRamal />
                   <button className="btn btn-outline-falar my-2">Salvar</button>
                 </div>
               ) : null}
