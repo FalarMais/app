@@ -20,7 +20,12 @@
 }
 
 table.dataTable th {
-  color: #6F00B4
+  background-color: #6F00B4;
+  color: #fff
+}
+
+table.dataTable td {
+  color: black
 }
 
 table.dataTable.display tbody tr:hover {
@@ -39,5 +44,5 @@ table.dataTable.display tbody tr.even > .sorting_1 {
 }
 
 table.dataTable.display tbody tr.even {
-  background-color: #f38c007a;
+  background-color: #f38c0054;
 }
