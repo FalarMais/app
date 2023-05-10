@@ -1,0 +1,9 @@
+@media (min-width: 1200px) {
+  .max14 {
+    max-width: 14.5rem !important;
+  }
+}
+
+.t-n{
+  transition: none !important;
+}

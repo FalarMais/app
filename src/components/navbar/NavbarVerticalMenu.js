@@ -49,6 +49,11 @@ const NavbarVerticalMenu = ({ routes, location }) => {
           <NavItem>
             <NavLink
               className="nav-link"
+              style={
+                {
+                  // color: '#fff'
+                }
+              }
               {...route}
               onClick={() => setShowBurgerMenu(false)}
             >
@@ -61,10 +66,15 @@ const NavbarVerticalMenu = ({ routes, location }) => {
     return (
       <Fragment key={index}>
         {getHr(route.name)}
-        <NavItem>
+        <NavItem className="">
           <BootstrapNavLink
             onClick={e => toggleOpened(e, index)}
-            className="dropdown-indicator cursor-pointer"
+            style={
+              {
+                // color: '#fff'
+              }
+            }
+            className="dropdown-indicator cursor-pointer "
             aria-expanded={openedIndex === index}
           >
             <NavbarVerticalMenuItem route={route} />

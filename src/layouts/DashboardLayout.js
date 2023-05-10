@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   // Route,
-  Switch,
+  Switch
 } from "react-router-dom";
 import Dashboard from "../components/dashboard/Dashboard";
 import DashboardAlt from "../components/dashboard-alt/DashboardAlt";
@@ -35,8 +35,13 @@ const DashboardLayout = ({ location }) => {
   }, [location.pathname]);
 
   return (
-    <div className={isFluid || isKanban ? "container-fluid" : "container"}>
-      {isVertical && <NavbarVertical isKanban={isKanban} navbarStyle={navbarStyle} />}
+    <div
+      className={isFluid || isKanban ? "container-fluid" : "container"}
+      style={{ paddingLeft: 0 }}
+    >
+      {isVertical && (
+        <NavbarVertical isKanban={isKanban} navbarStyle={navbarStyle} />
+      )}
       <ProductProvider>
         <div className="content">
           <NavbarTop />
@@ -47,7 +52,11 @@ const DashboardLayout = ({ location }) => {
               component={Cookies.get("perfil") === "adm" ? Home : Operador}
             />
             <PrivateRoute path="/123" exact component={Dashboard} />
-            <PrivateRoute path="/dashboard-alt" exact component={DashboardAlt} />
+            <PrivateRoute
+              path="/dashboard-alt"
+              exact
+              component={DashboardAlt}
+            />
             <DashboardRoutes />
           </Switch>
           {!isKanban && <Footer />}

@@ -13,6 +13,8 @@ import NavbarTopDropDownMenus from "./NavbarTopDropDownMenus";
 import NavbarVerticalMenu from "./NavbarVerticalMenu";
 import ToggleButton from "./ToggleButton";
 
+import "./nav.css";
+
 const NavbarVertical = ({ navbarStyle }) => {
   const navBarRef = useRef(null);
 
@@ -60,23 +62,27 @@ const NavbarVertical = ({ navbarStyle }) => {
   return (
     <Navbar
       expand={navbarBreakPoint}
-      className={classNames("navbar-vertical navbar-glass", {
+      className={classNames("navbar-vertical navbar-glass max14", {
         [`navbar-${navbarStyle}`]: navbarStyle !== "transparent"
       })}
       light
+      style={{
+        paddingLeft: 15
+        // background: "#7208b3"
+      }}
     >
       <Flex align="center">
         <ToggleButton
           isNavbarVerticalCollapsed={isNavbarVerticalCollapsed}
           setIsNavbarVerticalCollapsed={setIsNavbarVerticalCollapsed}
         />
-        <Logo at="navbar-vertical" width={40} />
+        <Logo at="navbar-vertical" />
       </Flex>
 
       <Collapse
         navbar
         isOpen={showBurgerMenu}
-        className="scrollbar"
+        className="scrollbar t-n"
         innerRef={navBarRef}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={() => {
@@ -84,9 +90,14 @@ const NavbarVertical = ({ navbarStyle }) => {
           HTMLClassList.remove("navbar-vertical-collapsed-hover");
         }}
         style={
-          navbarStyle === "vibrant" && {
-            backgroundImage: `linear-gradient(-45deg, rgba(0, 160, 255, 0.86), #0048a2),url(${bgNavbarImg})`
-          }
+          navbarStyle === "vibrant"
+            ? {
+                backgroundImage: `linear-gradient(-45deg, rgba(0, 160, 255, 0.86), #0048a2),url(${bgNavbarImg})`
+              }
+            : {
+                // background: "#7208b3",
+                // transition: "0 !important"
+              }
         }
       >
         <Nav navbar vertical>
