@@ -392,6 +392,10 @@ export let pesquisarCadastro = {
   name: ""
 };
 
+export let permissao = {
+  name: ""
+};
+
 export function registrarRotas() {
   const perfil = Cookies.get("perfil");
   console.log(perfil);
@@ -444,6 +448,12 @@ export function registrarRotas() {
       ]
     };
 
+    permissao = {
+      name: "Permissão de Ramais",
+      icon: "phone",
+      exact: true,
+      to: "/permissao-ramais"
+    };
     ramais = {
       name: "Ramais",
       icon: "comments",
@@ -488,6 +498,7 @@ export function registrarRotas() {
 
     rotas = [
       chamadas,
+      permissao,
       ramais,
       configuracao,
       conta,
@@ -504,6 +515,7 @@ export function registrarRotas() {
 
 export default [
   chamadas,
+  permissao,
   configuracao,
   conta,
   cadastros,
