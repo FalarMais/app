@@ -11,111 +11,112 @@ import { useState } from "react";
 
 import { MdDelete } from "react-icons/md";
 import { FaPlay } from "react-icons/fa";
+import moment from "moment";
 
 const TabelaChamados = ({ tipo }) => {
   const [data, setData] = useState([]);
 
   const chamadas = [
     {
-      codigo: "0001",
-      operador: "Michelle",
-      ramal: "1002",
-      situacao: "RECEBIDAS",
-      falando: "2194002-8922",
-      tespera: "0:30",
-      dchamada: "2:30"
+      origemChamada: "21966272062",
+      destinoChamada: "80843032",
+      horaInicio: "2020-03-04T13:30:00",
+      horaFim: "2020-03-04T13:30:20",
+      horaAtendimento: "2194002-8922",
+      status: 1,
+      contaId: "313213asd-32132132dad-32321das-dsa213"
     },
     {
-      codigo: "0002",
-      operador: "Amanda",
-      ramal: "1002",
-      situacao: "RECEBIDAS",
-      falando: "2194002-8922",
-      tespera: "0:30",
-      dchamada: "2:30"
+      origemChamada: "21966272062",
+      destinoChamada: "80843032",
+      horaInicio: "2020-03-04T13:00:00",
+      horaFim: "2020-03-04T13:30:10",
+      horaAtendimento: "2194002-8922",
+      status: 1,
+      contaId: "313213asd-32132132dad-32321das-dsa213"
     },
     {
-      codigo: "0003",
-      operador: "Rosana",
-      ramal: "1002",
-      situacao: "RECEBIDAS",
-      falando: "2194002-8922",
-      tespera: "0:30",
-      dchamada: "2:30"
+      origemChamada: "21966272062",
+      destinoChamada: "80843032",
+      horaInicio: "2020-03-04T13:00:00",
+      horaFim: "2020-03-04T13:30:20",
+      horaAtendimento: "2194002-8922",
+      status: 1,
+      contaId: "313213asd-32132132dad-32321das-dsa213"
     },
     {
-      codigo: "0004",
-      operador: "Costa",
-      ramal: "1002",
-      situacao: "RECEBIDAS",
-      falando: "2194002-8922",
-      tespera: "0:30",
-      dchamada: "2:30"
+      origemChamada: "21966272062",
+      destinoChamada: "80843032",
+      horaInicio: "2020-03-04T13:00:00",
+      horaFim: "2020-03-04T13:30:40",
+      horaAtendimento: "2194002-8922",
+      status: 1,
+      contaId: "313213asd-32132132dad-32321das-dsa213"
     },
     {
-      codigo: "0005",
-      operador: "Patricia",
-      ramal: "1002",
-      situacao: "RECEBIDAS",
-      falando: "2194002-8922",
-      tespera: "0:30",
-      dchamada: "2:30"
-    },
-
-    {
-      codigo: "0005",
-      operador: "Patricia",
-      ramal: "1002",
-      situacao: "EM PAUSA",
-      falando: "2194002-8922",
-      tespera: "0:30",
-      dchamada: "2:30"
-    },
-    {
-      codigo: "0005",
-      operador: "Patricia",
-      ramal: "1002",
-      situacao: "EM PAUSA",
-      falando: "2194002-8922",
-      tespera: "0:30",
-      dchamada: "2:30"
+      origemChamada: "21966272062",
+      destinoChamada: "80843032",
+      horaInicio: "2020-03-04T13:00:00",
+      horaFim: "2020-03-04T13:30:50",
+      horaAtendimento: "2194002-8922",
+      status: 1,
+      contaId: "313213asd-32132132dad-32321das-dsa213"
     },
 
     {
-      codigo: "0005",
-      operador: "Patricia",
-      ramal: "1002",
-      situacao: "CONCLUIDA",
-      falando: "2194002-8922",
-      tespera: "0:30",
-      dchamada: "2:30"
+      origemChamada: "21966272062",
+      destinoChamada: "80843032",
+      horaInicio: "2020-03-04T13:00:00",
+      horaFim: "2020-03-04T13:30:33",
+      horaAtendimento: "2194002-8922",
+      status: 1,
+      contaId: "313213asd-32132132dad-32321das-dsa213"
     },
     {
-      codigo: "0005",
-      operador: "Patricia",
-      ramal: "1002",
-      situacao: "PERDIDA",
-      falando: "2194002-8922",
-      tespera: "0:30",
-      dchamada: "2:30"
+      origemChamada: "21966272062",
+      destinoChamada: "80843032",
+      horaInicio: "2020-03-04T13:00:00",
+      horaFim: "2020-03-04T13:30:00",
+      horaAtendimento: "2194002-8922",
+      status: 1,
+      contaId: "313213asd-32132132dad-32321das-dsa213"
+    },
+
+    {
+      origemChamada: "21966272062",
+      destinoChamada: "80843032",
+      horaInicio: "2020-03-04T13:00:00",
+      horaFim: "2020-03-04T13:30:00",
+      horaAtendimento: "2194002-8922",
+      status: 1,
+      contaId: "313213asd-32132132dad-32321das-dsa213"
     },
     {
-      codigo: "0005",
-      operador: "Patricia",
-      ramal: "1002",
-      situacao: "PERDIDA",
-      falando: "2194002-8922",
-      tespera: "0:30",
-      dchamada: "2:30"
+      origemChamada: "21966272062",
+      destinoChamada: "80843032",
+      horaInicio: "2020-03-04T13:00:00",
+      horaFim: "2020-03-04T13:30:00",
+      horaAtendimento: "2194002-8922",
+      status: 1,
+      contaId: "313213asd-32132132dad-32321das-dsa213"
     },
     {
-      codigo: "0005",
-      operador: "Patricia",
-      ramal: "1002",
-      situacao: "EM ATENDIMENTO",
-      falando: "2194002-8922",
-      tespera: "0:30",
-      dchamada: "2:30"
+      origemChamada: "21966272062",
+      destinoChamada: "80843032",
+      horaInicio: "2020-03-04T13:00:00",
+      horaFim: "2020-03-04T13:30:00",
+      horaAtendimento: "2194002-8922",
+      status: 1,
+      contaId: "313213asd-32132132dad-32321das-dsa213"
+    },
+    {
+      origemChamada: "21966272062",
+      destinoChamada: "80843032",
+      horaInicio: "2020-03-04T13:00:00",
+      horaFim: "2020-03-04T13:30:00",
+      horaAtendimento: "2194002-8922",
+      status: 1,
+      contaId: "313213asd-32132132dad-32321das-dsa213"
     }
   ];
 
@@ -138,16 +139,6 @@ const TabelaChamados = ({ tipo }) => {
     console.log("render");
     if (data.length > 0) {
       window.$("#example").DataTable({
-        columns: [
-          { data: "Código" },
-          { data: "Operador" },
-          { data: "Ramal" },
-          { data: "Situação" },
-          { data: "Falando com" },
-          { data: "T.Espera" },
-          { data: "D.Chamada" },
-          { data: "" }
-        ],
         responsive: true,
         rowReorder: {
           selector: "td:nth-child(2)"
@@ -159,6 +150,20 @@ const TabelaChamados = ({ tipo }) => {
     }
   }, [data]);
 
+  function calcularDuracaoChamada(inicio, fim) {
+    const minicio = moment(inicio, "YYYY-MM-DD HH:mm:ss");
+    const mfim = moment(fim, "HH:mm:ss");
+
+    const diffHoras = moment(mfim.diff(minicio)).format("HH");
+    console.log(diffHoras);
+    const diffMinutos = moment(mfim.diff(minicio)).format("mm");
+    const diffSegundos = moment(mfim.diff(minicio)).format("ss");
+
+    if (diffMinutos === "00") {
+      return `${diffSegundos}s`;
+    }
+    return `${diffMinutos}m ${diffSegundos}s`;
+  }
   return (
     <div style={{ minHeight: 500 }}>
       {data.length > 0 ? (
@@ -166,11 +171,11 @@ const TabelaChamados = ({ tipo }) => {
           <thead>
             <tr>
               <th>Código</th>
-              <th>Operador</th>
-              <th>Ramal</th>
+              <th>Origem</th>
+              <th>Destino</th>
               <th>Situação</th>
-              <th>Falando com</th>
-              <th>T.Espera</th>
+              <th>H.Ínicio</th>
+              <th>H.Fim</th>
               <th>D.Chamada</th>
               <th />
             </tr>
@@ -178,13 +183,13 @@ const TabelaChamados = ({ tipo }) => {
           <tbody>
             {data.map((d, i) => (
               <tr key={i}>
-                <td>{d.codigo}</td>
-                <td>{d.operador}</td>
-                <td>{d.ramal}</td>
-                <td>{d.situacao}</td>
-                <td>{d.falando}</td>
-                <td>{d.tespera}</td>
-                <td>{d.dchamada}</td>
+                <td>{i + 1}</td>
+                <td>{d.origemChamada}</td>
+                <td>{d.destinoChamada}</td>
+                <td>{d.status}</td>
+                <td>{moment(d.horaInicio).format("DD/MM HH:mm:ss")}</td>
+                <td>{moment(d.horaFim).format("DD/MM HH:mm:ss")}</td>
+                <td>{calcularDuracaoChamada(d.horaInicio, d.horaFim)}</td>
                 <td>
                   <div className="d-flex">
                     <button className="btn mr-2">

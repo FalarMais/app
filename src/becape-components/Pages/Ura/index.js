@@ -7,7 +7,20 @@ import FalconCardHeader from "../../../components/common/FalconCardHeader";
 
 const Ura = () => {
   const [data, setData] = useState([]);
-
+  const [uras] = useState([
+    {
+      nome: "URA HMEF - v2.2 ADVERTIME SOUND.mp3",
+      href:
+        "https://file-examples.com/storage/fe563fce08645a90397f28d/2017/11/file_example_MP3_700KB.mp3",
+      selecionado: true
+    },
+    {
+      nome: "URA 2 - v2.2 ADVERTIME SOUND.mp3",
+      href:
+        "https://file-examples.com/storage/fe563fce08645a90397f28d/2017/11/file_example_MP3_700KB.mp3",
+      selecionado: false
+    }
+  ]);
   const chamadas = [
     {
       opcao: "1",
@@ -107,14 +120,20 @@ const Ura = () => {
       </FalconCardHeader>
       <CardBody>
         <div style={{ minHeight: 500 }}>
-          <h4 className="text-falar">URA - PASSE O MOUSE E CLIQUE NA JANELA</h4>
-          <a
-            href="https://file-examples.com/storage/fe563fce08645a90397f28d/2017/11/file_example_MP3_700KB.mp3"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            URA HMEF - v2.2 ADVERTIME SOUND.mp3
-          </a>
+          <div className="d-flex justify-content-between">
+            <h4 className="text-falar">
+              URA - PASSE O MOUSE E CLIQUE NA JANELA
+            </h4>
+            <button className="btn btn-falar my-2">Adicionar</button>
+          </div>
+          {uras.map(u => (
+            <>
+              <a href={u.href} rel="noopener noreferrer" target="_blank">
+                {u.nome}
+              </a>
+              <br />
+            </>
+          ))}
           <div className="mt-3">
             {data.length < 1 ? (
               <h1>Carregando</h1>
