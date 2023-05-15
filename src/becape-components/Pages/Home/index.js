@@ -67,7 +67,7 @@ const Home = () => {
           <option value="">Semana</option>
           <option value="">Mes</option>
         </select>
-        <button class="btn btn-falar">Aplicar</button>
+        <button className="btn btn-falar">Aplicar</button>
       </div>
       <Cards />
       {/* <ModalChamada /> */}
