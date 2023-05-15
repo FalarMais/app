@@ -10,8 +10,9 @@ import { Operador } from "../becape-components/Pages/Operador";
 import { PesquisarCadastro } from "../becape-components/Pages/PesquisarCadastro";
 import { RamaisGeral } from "../becape-components/Pages/RamaisGeral";
 import { PermissaoRamais } from "../becape-components/Pages/PermissaoRamais";
-import { Ura } from "../becape-components/Pages/Ura";
+import { ConfigUra } from "../becape-components/Pages/Ura/ConfigUra";
 
+// import { Ura } from "../becape-components/Pages/Ura";
 // import Alerts from '../components/bootstrap-components/Alerts';
 // import Avatar from '../components/bootstrap-components/Avatar';
 // import AutocompleteExample from '../components/bootstrap-components/AutocompleteExample';
@@ -185,7 +186,7 @@ const DashboardRoutes = () => (
       component={Cookies.get("perfil") === "adm" ? Home : Operador}
     />
 
-    <PrivateRoute path="/configuracoes/ura" exact component={Ura} />
+    <PrivateRoute path="/configuracoes/ura" exact component={ConfigUra} />
     <PrivateRoute path="/permissao-ramais" exact component={PermissaoRamais} />
     <PrivateRoute path="/historico" exact component={Historico} />
     <PrivateRoute
