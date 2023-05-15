@@ -29,6 +29,15 @@ const FormRamal = ({ tipo }) => {
         </div>
         <div className="col-4">
           <div>
+            <label htmlFor="">Realiza chamada</label>
+            <select name="" id="" className="form-control">
+              <option value="">SIM</option>
+              <option value="">NAO</option>
+            </select>
+          </div>
+        </div>
+        <div className="col-4">
+          <div>
             <label htmlFor="">Numero do ramal</label>
             <input type="text" className="form-control" />
           </div>
