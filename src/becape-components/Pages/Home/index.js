@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Cards } from "./Cards";
 import {
   AreaChart,
@@ -11,7 +11,11 @@ import {
 } from "recharts";
 import { TabelaChamados } from "../../Components/TabelaChamados";
 import { Card } from "reactstrap";
+import { useEffect } from "react";
+import { api } from "../../services/api";
+
 const Home = () => {
+  const [dataChamadas, setDataChamadas] = useState([]);
   const data = [
     {
       name: "Dia 1",
@@ -57,6 +61,14 @@ const Home = () => {
     }
   ];
 
+  useEffect(() => {
+    (async () => {
+      const data = await api.get("/chamada");
+      console.log(data);
+      setDataChamadas(data.data);
+    })();
+  }, []);
+
   return (
     <div>
       <div className="bg-light px-2 py-1 my-2">
@@ -69,11 +81,11 @@ const Home = () => {
         </select>
         <button className="btn btn-falar">Aplicar</button>
       </div>
-      <Cards />
+      <Cards dataChamadas={dataChamadas} />
       {/* <ModalChamada /> */}
 
       <Card className="my-3 p-3">
-        <TabelaChamados />
+        <TabelaChamados dataChamadas={dataChamadas} />
       </Card>
 
       <div style={{ width: "100%", height: 300 }} className="card col-12">
