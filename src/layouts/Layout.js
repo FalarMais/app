@@ -23,7 +23,9 @@ const AuthSplitRoutes = loadable(() =>
 );
 
 const Layout = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(
+    process.env.NODE_ENV === "production" ? true : false
+  );
 
   useEffect(() => {
     AuthBasicLayout.preload();
