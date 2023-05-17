@@ -1,18 +1,29 @@
-import React from 'react';
-// import CountUp from 'react-countup';
-// import { Row } from 'reactstrap';
-import CardSummary from '../../../components/dashboard/CardSummary';
+import React from "react";
 
-const Cards = () => {
+import CardSummary from "../../../components/dashboard/CardSummary";
+
+const Cards = ({ dataChamadas }) => {
+  function verificarAtendidaPerdida(opcao) {
+    if (dataChamadas.length === 0) {
+      return 0;
+    }
+
+    const dataFiltrado = dataChamadas.filter(d => d.status === opcao);
+    return dataFiltrado.length;
+  }
+
   return (
     <>
       <div className="card-deck">
         <CardSummary rate="" title="" color="warning">
           <div className="d-flex flex-column">
-            <h4>Chamadas: 40</h4>
-            <span className="text-success fs-1">Recebidas: 30</span>
-            <span className="text-danger fs-1">Perdidas: 5</span>
-            <span className="text-warning fs-1">Não Atendidas: 5</span>
+            <h4>Chamadas: {dataChamadas.length}</h4>
+            <span className="text-success fs-1">
+              Atendidas: {verificarAtendidaPerdida(2)}
+            </span>
+            <span className="text-danger fs-1">
+              Perdidas: {verificarAtendidaPerdida(1)}
+            </span>
           </div>
         </CardSummary>
 
@@ -28,7 +39,9 @@ const Cards = () => {
           <div className="d-flex flex-column">
             <h4>T. médio de Espera: 2:00</h4>
             <span className="text-muted fs-1">T. médio das chamadas: 3:00</span>
-            <span className="text-muted fs-1">T médio das chamadas por hora: 4:00</span>
+            <span className="text-muted fs-1">
+              T médio das chamadas por hora: 4:00
+            </span>
           </div>
         </CardSummary>
 
