@@ -4,7 +4,6 @@ import { BsArrowLeft } from "react-icons/bs";
 import { useHistory } from "react-router-dom";
 import { Card, CardBody } from "reactstrap";
 import FalconCardHeader from "../../../components/common/FalconCardHeader";
-
 const Ura = () => {
   const [data, setData] = useState([]);
   const [uras] = useState([
@@ -127,12 +126,14 @@ const Ura = () => {
             <button className="btn btn-falar my-2">Adicionar</button>
           </div>
           {uras.map(u => (
-            <>
+            <div>
               <a href={u.href} rel="noopener noreferrer" target="_blank">
                 {u.nome}
               </a>
+
+              <MdDelete size={15} />
               <br />
-            </>
+            </div>
           ))}
           <div className="mt-3">
             {data.length < 1 ? (
