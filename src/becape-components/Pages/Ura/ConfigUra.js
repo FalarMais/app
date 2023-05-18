@@ -7,7 +7,8 @@ import { useState } from "react";
 import { api } from "../../services/api";
 import { toast } from "react-toastify";
 import { ModalAudios } from "./ModalAudios";
-import { MdDelete } from "react-icons/md";
+
+import { Audios } from "../../Components/Audios";
 
 const ConfigUra = () => {
   const [audios, setAudios] = useState([]);
@@ -66,7 +67,6 @@ const ConfigUra = () => {
     setFormURA({ ...formURA, [name]: value });
   }
 
-  const excluirAudio = () => {};
   return (
     <Card>
       <FalconCardHeader title={`URA`} titleClass="text-falar">
@@ -79,28 +79,13 @@ const ConfigUra = () => {
         </button>
       </FalconCardHeader>
       <CardBody>
-        <ModalAudios abrirModal={abrirModal} />
-        <div className="border rounded p-2 mb-4">
-          <div className="d-flex justify-content-between">
-            <h5>Audios</h5>
-            <button
-              className="btn btn-sm btn-falar"
-              onClick={() => setAbrirModal(!abrirModal)}
-            >
-              add
-            </button>
-          </div>
-          {audios.map((audio, indice) => (
-            <div key={indice}>
-              <label>{audio.nomeArquivo}</label>
-              <MdDelete
-                size={15}
-                color="red"
-                onClick={() => excluirAudio(audio.id)}
-              />
-            </div>
-          ))}
-        </div>
+        <ModalAudios abrirModal={abrirModal} setAbrirModal={setAbrirModal} />
+        <Audios
+          audios={audios}
+          setAudios={setAudios}
+          abrirModal={abrirModal}
+          setAbrirModal={setAbrirModal}
+        />
 
         <div className="row">
           <div className="col-3 mb-4">
