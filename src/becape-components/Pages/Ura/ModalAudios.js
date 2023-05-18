@@ -9,7 +9,7 @@ import { useState } from "react";
 import { api } from "../../services/api";
 
 var a;
-const ModalAudios = ({ abrirModal }) => {
+const ModalAudios = ({ abrirModal, setAbrirModal }) => {
   const [buttonName, setButtonName] = useState("Play");
   const [audio, setAudio] = useState({ preview: null, enviar: null });
 
@@ -62,8 +62,14 @@ const ModalAudios = ({ abrirModal }) => {
   };
 
   return (
-    <Modal isOpen={abrirModal} style={{ overflow: "auto" }}>
-      <ModalHeader>Adicionar Audio</ModalHeader>
+    <Modal
+      isOpen={abrirModal}
+      style={{ overflow: "auto" }}
+      toggle={() => setAbrirModal(!abrirModal)}
+    >
+      <ModalHeader toggle={() => setAbrirModal(!abrirModal)}>
+        Adicionar Audio
+      </ModalHeader>
       <ModalBody>
         <input className="mb-4" type="file" onChange={uparAudio} />
         <button className="form-control mb-4" onClick={handleClick}>
