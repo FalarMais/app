@@ -5,13 +5,12 @@ import { MdDelete } from "react-icons/md";
 import { useHistory } from "react-router-dom";
 import { Card, CardBody } from "reactstrap";
 import FalconCardHeader from "../../../components/common/FalconCardHeader";
-import { FormRamal } from "../../Components/FormRamal";
+import { FormRamal, exemplo } from "../../Components/FormRamal";
 
 const RamaisGeral = () => {
   const [data, setData] = useState([]);
   const [ramal, setRamal] = useState(null);
   const [addRamal, setAddRamal] = useState(false);
-
   const chamadas = [
     {
       codigo: "3445",
@@ -77,7 +76,6 @@ const RamaisGeral = () => {
         {addRamal ? (
           <div className="mb-3">
             <FormRamal tipo="add" />
-            <button className="btn btn-outline-falar my-2">Adicionar</button>
           </div>
         ) : null}
 
@@ -126,8 +124,7 @@ const RamaisGeral = () => {
                       <MdDelete size={30} />
                     </span>
                   </div>
-                  <FormRamal />
-                  <button className="btn btn-outline-falar my-2">Salvar</button>
+                  <FormRamal tipo="atualizar" data={exemplo} />
                 </div>
               ) : null}
             </>
