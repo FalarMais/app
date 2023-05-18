@@ -6,7 +6,7 @@ import { MdDelete } from "react-icons/md";
 import { FaPlay } from "react-icons/fa";
 import { api } from "../../services/api";
 
-const TabelaChamados = ({ tipo, dataChamadas }) => {
+const TabelaChamados = ({ tipo, dataChamadas, setDataChamadas }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -40,20 +40,20 @@ const TabelaChamados = ({ tipo, dataChamadas }) => {
     }
   }, [data]);
 
-  // function calcularDuracaoChamada(inicio, fim) {
-  //   const minicio = moment(inicio, "YYYY-MM-DD HH:mm:ss");
-  //   const mfim = moment(fim, "HH:mm:ss");
+  /* function calcularDuracaoChamada(inicio, fim) {
+       const minicio = moment(inicio, "YYYY-MM-DD HH:mm:ss");
+       const mfim = moment(fim, "HH:mm:ss");
 
-  //   const diffHoras = moment(mfim.diff(minicio)).format("HH");
-  //   console.log(diffHoras);
-  //   const diffMinutos = moment(mfim.diff(minicio)).format("mm");
-  //   const diffSegundos = moment(mfim.diff(minicio)).format("ss");
+       const diffHoras = moment(mfim.diff(minicio)).format("HH");
+       console.log(diffHoras);
+       const diffMinutos = moment(mfim.diff(minicio)).format("mm");
+       const diffSegundos = moment(mfim.diff(minicio)).format("ss");
 
-  //   if (diffMinutos === "00") {
-  //     return `${diffSegundos}s`;
-  //   }
-  //   return `${diffMinutos}m ${diffSegundos}s`;
-  // }
+       if (diffMinutos === "00") {
+         return `${diffSegundos}s`;
+       }
+       return `${diffMinutos}m ${diffSegundos}s`;
+       }*/
 
   function verificarStatus(status) {
     switch (status) {
@@ -70,6 +70,19 @@ const TabelaChamados = ({ tipo, dataChamadas }) => {
     const { data } = await api.get(`/chamada/gravacaos/${idChamada}`);
     console.log(data[0].caminho);
   }
+
+  const excluirChamada = async id => {
+    const verificarSolicitacao = window.confirm(
+      `Deseja excluir a chamada ${id}?`
+    );
+
+    if (verificarSolicitacao) {
+      try {
+        await api.delete(`/chamada/${id}`);
+        setDataChamadas(audios => audios.filter(a => a.id !== id));
+      } catch (err) {}
+    }
+  };
   return (
     <div style={{ minHeight: 500 }}>
       {data.length > 0 ? (
@@ -108,7 +121,11 @@ const TabelaChamados = ({ tipo, dataChamadas }) => {
                       />
                     </button>
                     <button className="btn">
-                      <MdDelete color="#EE565D" size={24} />
+                      <MdDelete
+                        color="#EE565D"
+                        size={24}
+                        onClick={() => excluirChamada(d.id)}
+                      />
                     </button>
                   </div>
                 </td>
