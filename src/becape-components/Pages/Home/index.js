@@ -85,7 +85,10 @@ const Home = () => {
       {/* <ModalChamada /> */}
 
       <Card className="my-3 p-3">
-        <TabelaChamados dataChamadas={dataChamadas} />
+        <TabelaChamados
+          dataChamadas={dataChamadas}
+          setDataChamadas={setDataChamadas}
+        />
       </Card>
 
       <div style={{ width: "100%", height: 300 }} className="card col-12">
