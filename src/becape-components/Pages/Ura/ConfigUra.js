@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { ModalAudios } from "./ModalAudios";
 
 import { Audios } from "../../Components/Audios";
+import { validarForm } from "../../utils/validarForm";
 
 const ConfigUra = () => {
   const [audios, setAudios] = useState([]);
@@ -19,8 +20,8 @@ const ConfigUra = () => {
     audioId: "28b5c2b9-a972-4451-b788-905cb392a257",
     textoUra: "TEXTOURADEFAULT",
     audioOuTexto: false,
-    maxEsperaOpcao: 0,
-    maxTentativas: 0,
+    maxEsperaOpcao: "",
+    maxTentativas: "",
     idAudioErro: "68cd6d4b-e9e8-485b-866f-8e507401f74b",
     textoErro: "TEXTOERRODEFAULT",
     audioOuTextoErro: false,
@@ -39,18 +40,38 @@ const ConfigUra = () => {
       setAtendedor(atendedor);
     })();
 
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    // var forms = document.getElementsByClassName("needs-validation");
+    // var validation = Array.prototype.filter.call(forms, function(form) {
+    //   form.addEventListener(
+    //     "submit",
+    //     function(event) {
+    //       event.preventDefault();
+
+    //       if (form.checkValidity() === false) {
+    //         event.stopPropagation();
+    //       } else {
+    //         salvar();
+    //       }
+
+    //       form.classList.add("was-validated");
+    //     },
+    //     false
+    //   );
+    // });
+    validarForm(salvar);
     // eslint-disable-next-line
   }, []);
 
   const history = useHistory();
 
-  function salvar() {
+  function salvar(e) {
     switch (true) {
       case formURA.audioOuTexto &&
         formURA.audioId === "" &&
         formURA.audioOuTextoErro &&
         formURA.idAudioErro === "":
-        return toast.info("Selecione os dois áudios para continuar.");
+        return toast.info("Selecione os dois áudios.");
       case formURA.audioOuTexto && formURA.audioId === "":
         return toast.info("Selecione um áudio.");
       case formURA.audioOuTextoErro && formURA.idAudioErro === "":
@@ -86,289 +107,326 @@ const ConfigUra = () => {
           abrirModal={abrirModal}
           setAbrirModal={setAbrirModal}
         />
-
-        <div className="row">
-          <div className="col-3 mb-4">
-            <div>
-              <label htmlFor="">Audio/Texto:</label>
-              <div className="d-flex ">
-                <div className="d-flex align-items-center mr-2">
-                  <label
-                    style={{ marginBottom: 0 }}
-                    className="mr-1"
-                    htmlFor=""
-                  >
-                    Ligado
-                  </label>
-                  <input
-                    onChange={() => {
-                      setFormURA({ ...formURA, audioOuTexto: true });
-                    }}
-                    checked={formURA.audioOuTexto === true && true}
-                    type="radio"
-                    name="audioTexto"
-                    id=""
-                  />
-                </div>
-                <div className="d-flex align-items-center">
-                  <label style={{ marginBottom: 0 }} className="mr-1">
-                    Desligado
-                  </label>
-                  <input
-                    checked={formURA.audioOuTexto === false && true}
-                    onChange={() => {
-                      setFormURA({ ...formURA, audioOuTexto: false });
-                    }}
-                    type="radio"
-                    name="audioTexto"
-                    id=""
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-3 mb-4">
-            <div>
-              <label htmlFor="">Audio/Texto Erro:</label>
-              <div className="d-flex ">
-                <div className="d-flex align-items-center mr-2">
-                  <label
-                    style={{ marginBottom: 0 }}
-                    className="mr-1"
-                    htmlFor=""
-                  >
-                    Ligado
-                  </label>
-                  <input
-                    onChange={() => {
-                      setFormURA({ ...formURA, audioOuTextoErro: true });
-                    }}
-                    checked={formURA.audioOuTextoErro === true && true}
-                    type="radio"
-                    name="audioTextoErro"
-                    id=""
-                  />
-                </div>
-                <div className="d-flex align-items-center">
-                  <label style={{ marginBottom: 0 }} className="mr-1">
-                    Desligado
-                  </label>
-                  <input
-                    onChange={() => {
-                      setFormURA({ ...formURA, audioOuTextoErro: false });
-                    }}
-                    checked={formURA.audioOuTextoErro === false && true}
-                    type="radio"
-                    name="audioTextoErro"
-                    id=""
-                  />
+        <form class="needs-validation" noValidate>
+          <div className="row">
+            <div className="col-3 mb-4">
+              <div>
+                <label htmlFor="">Audio/Texto:</label>
+                <div className="d-flex ">
+                  <div className="d-flex align-items-center mr-2">
+                    <label
+                      style={{ marginBottom: 0 }}
+                      className="mr-1"
+                      htmlFor=""
+                    >
+                      Ligado
+                    </label>
+                    <input
+                      required
+                      onChange={() => {
+                        setFormURA({ ...formURA, audioOuTexto: true });
+                      }}
+                      checked={formURA.audioOuTexto === true && true}
+                      type="radio"
+                      name="audioTexto"
+                      id=""
+                    />
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <label style={{ marginBottom: 0 }} className="mr-1">
+                      Desligado
+                    </label>
+                    <input
+                      required
+                      checked={formURA.audioOuTexto === false && true}
+                      onChange={() => {
+                        setFormURA({ ...formURA, audioOuTexto: false });
+                      }}
+                      type="radio"
+                      name="audioTexto"
+                      id=""
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="col-3 mb-4">
-            <div>
-              <label htmlFor="">Discagem Direta:</label>
-              <div className="d-flex ">
-                <div className="d-flex align-items-center mr-2">
-                  <label
-                    style={{ marginBottom: 0 }}
-                    className="mr-1"
-                    htmlFor=""
-                  >
-                    Ligado
-                  </label>
-                  <input
-                    onChange={() => {
-                      setFormURA({ ...formURA, discagemDireta: true });
-                    }}
-                    checked={formURA.discagemDireta === true && true}
-                    type="radio"
-                    name="discagemDireta"
-                    id=""
-                  />
+            <div className="col-3 mb-4">
+              <div>
+                <label htmlFor="">Audio/Texto Erro:</label>
+                <div className="d-flex ">
+                  <div className="d-flex align-items-center mr-2">
+                    <label
+                      style={{ marginBottom: 0 }}
+                      className="mr-1"
+                      htmlFor=""
+                    >
+                      Ligado
+                    </label>
+                    <input
+                      required
+                      onChange={() => {
+                        setFormURA({ ...formURA, audioOuTextoErro: true });
+                      }}
+                      checked={formURA.audioOuTextoErro === true && true}
+                      type="radio"
+                      name="audioTextoErro"
+                      id=""
+                    />
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <label style={{ marginBottom: 0 }} className="mr-1">
+                      Desligado
+                    </label>
+                    <input
+                      required
+                      onChange={() => {
+                        setFormURA({ ...formURA, audioOuTextoErro: false });
+                      }}
+                      checked={formURA.audioOuTextoErro === false && true}
+                      type="radio"
+                      name="audioTextoErro"
+                      id=""
+                    />
+                  </div>
                 </div>
-                <div className="d-flex align-items-center">
-                  <label style={{ marginBottom: 0 }} className="mr-1">
-                    Desligado
-                  </label>
-                  <input
-                    checked={formURA.discagemDireta === false && true}
-                    onChange={() => {
-                      setFormURA({ ...formURA, discagemDireta: false });
-                    }}
-                    type="radio"
-                    name="discagemDireta"
-                    id=""
-                  />
+              </div>
+            </div>
+            <div className="col-3 mb-4">
+              <div>
+                <label htmlFor="">Discagem Direta:</label>
+                <div className="d-flex ">
+                  <div className="d-flex align-items-center mr-2">
+                    <label
+                      style={{ marginBottom: 0 }}
+                      className="mr-1"
+                      htmlFor=""
+                    >
+                      Ligado
+                    </label>
+                    <input
+                      required
+                      onChange={() => {
+                        setFormURA({ ...formURA, discagemDireta: true });
+                      }}
+                      checked={formURA.discagemDireta === true && true}
+                      type="radio"
+                      name="discagemDireta"
+                      id=""
+                    />
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <label style={{ marginBottom: 0 }} className="mr-1">
+                      Desligado
+                    </label>
+                    <input
+                      required
+                      checked={formURA.discagemDireta === false && true}
+                      onChange={() => {
+                        setFormURA({ ...formURA, discagemDireta: false });
+                      }}
+                      type="radio"
+                      name="discagemDireta"
+                      id=""
+                    />
+                  </div>
                 </div>
+              </div>
+            </div>
+
+            <div className="col-3 mb-4">
+              <div>
+                <label htmlFor="">Discar Antes Termino:</label>
+                <div className="d-flex ">
+                  <div className="d-flex align-items-center mr-2">
+                    <label
+                      style={{ marginBottom: 0 }}
+                      className="mr-1"
+                      htmlFor=""
+                    >
+                      Ligado
+                    </label>
+                    <input
+                      required
+                      onChange={() => {
+                        setFormURA({
+                          ...formURA,
+                          discarAntesTermino: true
+                        });
+                      }}
+                      checked={formURA.discarAntesTermino === true && true}
+                      type="radio"
+                      name="discarAntesTermino"
+                      id=""
+                    />
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <label style={{ marginBottom: 0 }} className="mr-1">
+                      Desligado
+                    </label>
+                    <input
+                      required
+                      onChange={() => {
+                        setFormURA({
+                          ...formURA,
+                          discarAntesTermino: false
+                        });
+                      }}
+                      checked={formURA.discarAntesTermino === false && true}
+                      type="radio"
+                      name="discarAntesTermino"
+                      id=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-6 mb-4">
+              <div>
+                <label htmlFor="">Audio</label>
+                <select
+                  required
+                  type="text"
+                  className="form-control"
+                  disabled={formURA.audioOuTexto ? false : true}
+                  onChange={e => handleForm(e)}
+                  name="audioId"
+                  value={formURA.audioId}
+                >
+                  <option value="" />
+
+                  {audios.map((audio, indice) => (
+                    <option key={indice} value={audio.id}>{`${
+                      audio.nomeArquivo
+                    }`}</option>
+                  ))}
+                </select>
+                <div className="invalid-feedback">Forneça um áudio.</div>
+              </div>
+            </div>
+            <div className="col-6 mb-4">
+              <div>
+                <label htmlFor="">Audio Error</label>
+                <select
+                  required
+                  type="text"
+                  className="form-control"
+                  disabled={formURA.audioOuTextoErro ? false : true}
+                  onChange={e => handleForm(e)}
+                  name="idAudioErro"
+                  value={formURA.idAudioErro}
+                >
+                  <option value="" />
+
+                  {audios.map((audio, indice) => (
+                    <option key={indice} value={audio.id}>{`${
+                      audio.nomeArquivo
+                    }`}</option>
+                  ))}
+                </select>
+                <div className="invalid-feedback">Forneça um áudio.</div>
+              </div>
+            </div>
+
+            <div className="col-6 mb-4">
+              <div>
+                <label htmlFor="">Texto URA</label>
+                <textarea
+                  required
+                  type="text"
+                  className="form-control"
+                  disabled={formURA.audioOuTexto ? true : false}
+                  onChange={e => handleForm(e)}
+                  value={formURA.textoUra}
+                  name="textoUra"
+                />
+                <div className="invalid-feedback">
+                  Forneça um texto para URA
+                </div>
+              </div>
+            </div>
+            <div className="col-6 mb-4">
+              <div>
+                <label htmlFor="">Texto Erro</label>
+                <textarea
+                  required
+                  type="text"
+                  className="form-control"
+                  disabled={formURA.audioOuTextoErro ? true : false}
+                  onChange={e => handleForm(e)}
+                  value={formURA.textoErro}
+                  name="textoErro"
+                />
+                <div className="invalid-feedback">
+                  Forneça um texto para o erro.
+                </div>
+              </div>
+            </div>
+
+            <div className="col-4 mb-4">
+              <div>
+                <label htmlFor="">Atendedor Padrão:</label>
+                <select
+                  required
+                  type="text"
+                  className="form-control"
+                  onChange={e => handleForm(e)}
+                  name="idAtendedorErro"
+                  value={formURA.idAtendedorErro}
+                >
+                  <option value="" />
+
+                  <option value="1" />
+                  {atendedor.map(a => (
+                    <option value={a.id}>{`${a.nome}`}</option>
+                  ))}
+                </select>
+                <div className="invalid-feedback">
+                  Selecione um numero Atendedor Padrão.
+                </div>
+              </div>
+            </div>
+
+            <div className="col-4">
+              <div>
+                <label htmlFor="">Máx. Espera Opção</label>
+                <input
+                  required
+                  onChange={e => handleForm(e)}
+                  name="maxEsperaOpcao"
+                  className="form-control"
+                  type="number"
+                  value={formURA.maxEsperaOpcao}
+                />
+
+                <div className="invalid-feedback">
+                  Forneça um numero para o Máximo de Espera.
+                </div>
+              </div>
+            </div>
+            <div className="col-4">
+              <div>
+                <label htmlFor="">Máx. Tentativas</label>
+                <input
+                  required
+                  className="form-control"
+                  onChange={e => handleForm(e)}
+                  name="maxTentativas"
+                  type="number"
+                  value={formURA.maxTentativas}
+                />
+                <div className="invalid-feedback">
+                  Forneça um numero para o Máximo de tentativas.
+                </div>
+                {/* <ValidarCampo data={formURA.maxTentativas} /> */}
               </div>
             </div>
           </div>
 
-          <div className="col-3 mb-4">
-            <div>
-              <label htmlFor="">Discar Antes Termino:</label>
-              <div className="d-flex ">
-                <div className="d-flex align-items-center mr-2">
-                  <label
-                    style={{ marginBottom: 0 }}
-                    className="mr-1"
-                    htmlFor=""
-                  >
-                    Ligado
-                  </label>
-                  <input
-                    onChange={() => {
-                      setFormURA({
-                        ...formURA,
-                        discarAntesTermino: true
-                      });
-                    }}
-                    checked={formURA.discarAntesTermino === true && true}
-                    type="radio"
-                    name="discarAntesTermino"
-                    id=""
-                  />
-                </div>
-                <div className="d-flex align-items-center">
-                  <label style={{ marginBottom: 0 }} className="mr-1">
-                    Desligado
-                  </label>
-                  <input
-                    onChange={() => {
-                      setFormURA({
-                        ...formURA,
-                        discarAntesTermino: false
-                      });
-                    }}
-                    checked={formURA.discarAntesTermino === false && true}
-                    type="radio"
-                    name="discarAntesTermino"
-                    id=""
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-6 mb-4">
-            <div>
-              <label htmlFor="">Audio</label>
-              <select
-                type="text"
-                className="form-control"
-                disabled={formURA.audioOuTexto ? false : true}
-                onChange={e => handleForm(e)}
-                name="audioId"
-                value={formURA.audioId}
-              >
-                <option value="" />
-
-                {audios.map((audio, indice) => (
-                  <option key={indice} value={audio.id}>{`${
-                    audio.nomeArquivo
-                  }`}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <div className="col-6 mb-4">
-            <div>
-              <label htmlFor="">Audio Error</label>
-              <select
-                type="text"
-                className="form-control"
-                disabled={formURA.audioOuTextoErro ? false : true}
-                onChange={e => handleForm(e)}
-                name="idAudioErro"
-                value={formURA.idAudioErro}
-              >
-                <option value="" />
-
-                {audios.map((audio, indice) => (
-                  <option key={indice} value={audio.id}>{`${
-                    audio.nomeArquivo
-                  }`}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className="col-6 mb-4">
-            <div>
-              <label htmlFor="">Texto URA</label>
-              <textarea
-                type="text"
-                className="form-control"
-                disabled={formURA.audioOuTexto ? true : false}
-                onChange={e => handleForm(e)}
-                value={formURA.textoUra}
-                name="textoUra"
-              />
-            </div>
-          </div>
-          <div className="col-6 mb-4">
-            <div>
-              <label htmlFor="">Texto Erro</label>
-              <textarea
-                type="text"
-                className="form-control"
-                disabled={formURA.audioOuTextoErro ? true : false}
-                onChange={e => handleForm(e)}
-                value={formURA.textoErro}
-                name="textoErro"
-              />
-            </div>
-          </div>
-
-          <div className="col-4 mb-4">
-            <div>
-              <label htmlFor="">Atendedor Padrão:</label>
-              <select
-                type="text"
-                className="form-control"
-                onChange={e => handleForm(e)}
-                name="idAtendedorErro"
-                value={formURA.idAtendedorErro}
-              >
-                <option value="" />
-                {atendedor.map(a => (
-                  <option value={a.id}>{`${a.nome}`}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          <div className="col-4">
-            <div>
-              <label htmlFor="">Máx. Espera Opção</label>
-              <input
-                onChange={e => handleForm(e)}
-                name="maxEsperaOpcao"
-                className="form-control"
-                type="number"
-                value={formURA.maxEsperaOpcao}
-              />
-            </div>
-          </div>
-          <div className="col-4">
-            <div>
-              <label htmlFor="">Máx. Tentativas</label>
-              <input
-                className="form-control"
-                onChange={e => handleForm(e)}
-                name="maxTentativas"
-                type="number"
-                value={formURA.maxTentativas}
-              />
-            </div>
-          </div>
-        </div>
-
-        <button className="my-3 btn btn-falar" onClick={() => salvar()}>
-          Salvar
-        </button>
+          <button className="my-3 btn btn-falar" type="submit">
+            Salvar
+          </button>
+        </form>
       </CardBody>
     </Card>
   );
