@@ -11,6 +11,8 @@ import { PesquisarCadastro } from "../becape-components/Pages/PesquisarCadastro"
 import { RamaisGeral } from "../becape-components/Pages/RamaisGeral";
 import { PermissaoRamais } from "../becape-components/Pages/PermissaoRamais";
 import { ConfigUra } from "../becape-components/Pages/Ura/ConfigUra";
+import { Atendentes } from "../becape-components/Pages/Atendentes";
+import { Conta } from "../becape-components/Pages/Conta";
 
 // import { Ura } from "../becape-components/Pages/Ura";
 // import Alerts from '../components/bootstrap-components/Alerts';
@@ -199,6 +201,11 @@ const DashboardRoutes = () => (
       exact
       component={FilaAtendimento}
     />
+    <PrivateRoute
+      path="/configuracoes/atendedor"
+      exact
+      component={Atendentes}
+    />
 
     <PrivateRoute path="/novo-cadastro" exact component={NovoCadastro} />
     <PrivateRoute
@@ -207,6 +214,7 @@ const DashboardRoutes = () => (
       component={PesquisarCadastro}
     />
     <PrivateRoute path="/ramais/geral" exact component={RamaisGeral} />
+    <PrivateRoute path="/conta" exact component={Conta} />
 
     {/* <Route path="/feed" exact component={Feed} />
     Pages

@@ -475,8 +475,8 @@ export function registrarRotas() {
           name: "Horários / Agenda / Turno"
         },
         {
-          to: "/configuracoes/fila-atendimentos",
-          name: "Fila de Atendimentos"
+          to: "/configuracoes/Atendedor",
+          name: "Atendedor"
         },
         { to: "/configuracoes/ura", name: "URA" }
       ]
