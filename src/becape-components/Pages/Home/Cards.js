@@ -4,11 +4,14 @@ import CardSummary from "../../../components/dashboard/CardSummary";
 
 const Cards = ({ dataChamadas }) => {
   function verificarAtendidaPerdida(opcao) {
-    if (dataChamadas.length === 0) {
+    if (!dataChamadas.content) {
+      return 0;
+    }
+    if (dataChamadas.content.length === 0) {
       return 0;
     }
 
-    const dataFiltrado = dataChamadas.filter(d => d.status === opcao);
+    const dataFiltrado = dataChamadas.content.filter(d => d.status === opcao);
     return dataFiltrado.length;
   }
 
@@ -17,7 +20,9 @@ const Cards = ({ dataChamadas }) => {
       <div className="card-deck">
         <CardSummary rate="" title="" color="warning">
           <div className="d-flex flex-column">
-            <h4>Chamadas: {dataChamadas.length}</h4>
+            <h4>
+              Chamadas: {dataChamadas.content ? dataChamadas.content.length : 0}
+            </h4>
             <span className="text-success fs-1">
               Atendidas: {verificarAtendidaPerdida(2)}
             </span>
