@@ -1,44 +1,30 @@
-import React, { useEffect } from "react";
-import "./tabela.css";
-import { useState } from "react";
-
+import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { FaPlay } from "react-icons/fa";
+
 import { api } from "../../services/api";
+import { useInicializarTabela } from "../../hooks/useInicializarTabela";
+
+import "./tabela.css";
+import { useApiRequest } from "../../hooks/useApiRequest";
 
 const TabelaChamados = ({ tipo, dataChamadas, setDataChamadas }) => {
   const [data, setData] = useState([]);
-
+  useInicializarTabela(data);
+  const { doRequest } = useApiRequest();
   useEffect(() => {
-    setTimeout(() => {
-      window
-        .$("#example")
-        .DataTable()
-        .destroy();
+    window
+      .$("#example")
+      .DataTable()
+      .destroy();
 
-      const novaData = tipo
-        ? dataChamadas.filter(c => c.situacao === tipo)
-        : dataChamadas;
-      console.log(novaData);
-      setData(novaData);
-    }, 1000);
+    if (dataChamadas.content) {
+      setData(dataChamadas.content);
+    } else {
+      setData([]);
+    }
     // eslint-disable-next-line
   }, [dataChamadas]);
-
-  useEffect(() => {
-    console.log("render");
-    if (data.length > 0) {
-      window.$("#example").DataTable({
-        responsive: true,
-        rowReorder: {
-          selector: "td:nth-child(2)"
-        },
-        language: {
-          url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
-        }
-      });
-    }
-  }, [data]);
 
   /* function calcularDuracaoChamada(inicio, fim) {
        const minicio = moment(inicio, "YYYY-MM-DD HH:mm:ss");
@@ -67,8 +53,11 @@ const TabelaChamados = ({ tipo, dataChamadas, setDataChamadas }) => {
   }
 
   async function abrirGravacao(idChamada) {
-    const { data } = await api.get(`/chamada/gravacaos/${idChamada}`);
-    console.log(data[0].caminho);
+    const { content } = await doRequest(
+      "get",
+      `/chamada/${idChamada}/gravacoes`
+    );
+    console.log(content);
   }
 
   const excluirChamada = async id => {
@@ -79,7 +68,9 @@ const TabelaChamados = ({ tipo, dataChamadas, setDataChamadas }) => {
     if (verificarSolicitacao) {
       try {
         await api.delete(`/chamada/${id}`);
-        setDataChamadas(audios => audios.filter(a => a.id !== id));
+        const contentFiltrado = dataChamadas.content.filter(a => a.id !== id);
+
+        setDataChamadas({ ...dataChamadas, content: contentFiltrado });
       } catch (err) {}
     }
   };
