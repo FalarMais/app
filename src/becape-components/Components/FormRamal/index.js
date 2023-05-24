@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { validarForm } from "../../utils/validarForm";
 
 export const exemplo = {
@@ -45,15 +44,10 @@ const FormRamal = ({ tipo, data }) => {
     console.log(form);
   }
 
-  useEffect(() => {
-    validarForm(adicionarRamal);
-    // eslint-disable-next-line
-  }, []);
-
   return (
     <div className="my-4">
       <div className="" />
-      <form class="needs-validation" noValidate>
+      <form className="needs-validation" noValidate>
         <div className="row">
           <div className="col-3 mb-4">
             <div>
@@ -301,7 +295,11 @@ const FormRamal = ({ tipo, data }) => {
             </div>
           </div>
         </div>
-        <button className="btn btn-outline-falar my-2" type="submit">
+        <button
+          className="btn btn-outline-falar my-2"
+          type="submit"
+          onClick={e => validarForm(e, () => adicionarRamal())}
+        >
           {tipo}
         </button>
       </form>
