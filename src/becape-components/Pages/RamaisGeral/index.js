@@ -6,11 +6,16 @@ import { useHistory } from "react-router-dom";
 import { Card, CardBody } from "reactstrap";
 import FalconCardHeader from "../../../components/common/FalconCardHeader";
 import { FormRamal, exemplo } from "../../Components/FormRamal";
+import { useInicializarTabela } from "../../hooks/useInicializarTabela";
 
 const RamaisGeral = () => {
   const [data, setData] = useState([]);
   const [ramal, setRamal] = useState(null);
   const [addRamal, setAddRamal] = useState(false);
+
+  const history = useHistory();
+  useInicializarTabela(data);
+
   const chamadas = [
     {
       codigo: "3445",
@@ -37,22 +42,6 @@ const RamaisGeral = () => {
     }, 1000);
     // eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    console.log("render");
-    if (data.length > 0) {
-      window.$("#example").DataTable({
-        responsive: true,
-        rowReorder: {
-          selector: "td:nth-child(2)"
-        },
-        language: {
-          url: "https://cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
-        }
-      });
-    }
-  }, [data]);
-  const history = useHistory();
 
   return (
     <Card>

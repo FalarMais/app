@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Cards } from "./Cards";
 import {
   AreaChart,
@@ -12,10 +12,14 @@ import {
 import { TabelaChamados } from "../../Components/TabelaChamados";
 import { Card } from "reactstrap";
 import { useEffect } from "react";
-import { api } from "../../services/api";
+import { useApiRequestEffect } from "../../hooks/useApiRequest";
+import Cookies from "js-cookie";
 
 const Home = () => {
-  const [dataChamadas, setDataChamadas] = useState([]);
+  const contaId = Cookies.get("contaId");
+  const { response, setResponse, isLoading } = useApiRequestEffect(
+    `/chamada/conta/${contaId}`
+  );
   const data = [
     {
       name: "Dia 1",
@@ -62,12 +66,8 @@ const Home = () => {
   ];
 
   useEffect(() => {
-    (async () => {
-      const data = await api.get("/chamada");
-      console.log(data);
-      setDataChamadas(data.data);
-    })();
-  }, []);
+    console.log(response);
+  }, [response]);
 
   return (
     <div>
@@ -81,13 +81,14 @@ const Home = () => {
         </select>
         <button className="btn btn-falar">Aplicar</button>
       </div>
-      <Cards dataChamadas={dataChamadas} />
+      <Cards dataChamadas={response} />
       {/* <ModalChamada /> */}
 
       <Card className="my-3 p-3">
         <TabelaChamados
-          dataChamadas={dataChamadas}
-          setDataChamadas={setDataChamadas}
+          dataChamadas={response}
+          setDataChamadas={setResponse}
+          isLoading={isLoading}
         />
       </Card>
 

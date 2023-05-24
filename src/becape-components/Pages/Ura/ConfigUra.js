@@ -40,26 +40,6 @@ const ConfigUra = () => {
       setAtendedor(atendedor);
     })();
 
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    // var forms = document.getElementsByClassName("needs-validation");
-    // var validation = Array.prototype.filter.call(forms, function(form) {
-    //   form.addEventListener(
-    //     "submit",
-    //     function(event) {
-    //       event.preventDefault();
-
-    //       if (form.checkValidity() === false) {
-    //         event.stopPropagation();
-    //       } else {
-    //         salvar();
-    //       }
-
-    //       form.classList.add("was-validated");
-    //     },
-    //     false
-    //   );
-    // });
-    validarForm(salvar);
     // eslint-disable-next-line
   }, []);
 
@@ -107,7 +87,7 @@ const ConfigUra = () => {
           abrirModal={abrirModal}
           setAbrirModal={setAbrirModal}
         />
-        <form class="needs-validation" noValidate>
+        <form className="needs-validation" noValidate>
           <div className="row">
             <div className="col-3 mb-4">
               <div>
@@ -418,12 +398,15 @@ const ConfigUra = () => {
                 <div className="invalid-feedback">
                   Forneça um numero para o Máximo de tentativas.
                 </div>
-                {/* <ValidarCampo data={formURA.maxTentativas} /> */}
               </div>
             </div>
           </div>
 
-          <button className="my-3 btn btn-falar" type="submit">
+          <button
+            className="my-3 btn btn-falar"
+            type="submit"
+            onClick={e => validarForm(e, () => salvar())}
+          >
             Salvar
           </button>
         </form>
