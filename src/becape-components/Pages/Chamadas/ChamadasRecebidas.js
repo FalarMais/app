@@ -5,10 +5,15 @@ import { Card, CardBody } from "reactstrap";
 import { BsArrowLeft } from "react-icons/bs";
 import FalconCardHeader from "../../../components/common/FalconCardHeader";
 import { TabelaChamados } from "../../Components/TabelaChamados";
+import Cookies from "js-cookie";
+import { useApiRequestEffect } from "../../hooks/useApiRequest";
 
+const contaId = Cookies.get("contaId");
 const ChamadasRecebidas = () => {
   const history = useHistory();
-
+  const { response, setResponse } = useApiRequestEffect(
+    `/chamada/conta/${contaId}`
+  );
   return (
     <Card>
       <FalconCardHeader title={`Chamadas Recebidas`}>
@@ -21,7 +26,7 @@ const ChamadasRecebidas = () => {
         </button>
       </FalconCardHeader>
       <CardBody>
-        <TabelaChamados />
+        <TabelaChamados dataChamadas={response} setDataChamadas={setResponse} />
       </CardBody>
     </Card>
   );

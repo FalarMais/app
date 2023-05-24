@@ -6,16 +6,18 @@ import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import withRedirect from "../../hoc/withRedirect";
 import Cookies from "js-cookie";
 import { registrarRotas } from "../../routes";
+import { useApiRequest } from "../../becape-components/hooks/useApiRequest";
 
 const LoginForm = ({ setRedirect, hasLabel, layout }) => {
-  // State
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
+  const [errorMensagem, setErrorMensagem] = useState("");
+  const { isLoading, doRequest } = useApiRequest();
 
-  // Handler
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
+    setErrorMensagem("");
 
     if (email === "operador@gmail.com") {
       Cookies.set("perfil", "operador", { expires: 1 });
@@ -24,17 +26,35 @@ const LoginForm = ({ setRedirect, hasLabel, layout }) => {
       toast.success(`Logado com ${email}`);
       setRedirect(true);
       registrarRotas();
-    }
-    if (email === "adm@gmail.com") {
-      Cookies.set("acesso", true, { expires: 1 });
-      Cookies.set("perfil", "adm", { expires: 1 });
+    } else {
+      try {
+        const data = {
+          userName: email,
+          password: password
+        };
 
-      toast.success(`Logado com ${email}`);
-      setRedirect(true);
-      registrarRotas();
-    }
+        const responsePost = await doRequest("post", "autenticacao", data);
 
-    // toast.success(`Email inválido`);
+        if (responsePost.status === 200) {
+          const { email, contaId } = responsePost.content;
+          console.log(responsePost);
+
+          Cookies.set("acesso", true, { expires: 1 });
+          Cookies.set("contaId", contaId, { expires: 1 });
+          Cookies.set("perfil", "adm", { expires: 1 });
+
+          registrarRotas();
+          setRedirect(true);
+          toast.success(`Logado com ${email}`);
+        }
+
+        if (responsePost.status === 401) {
+          setErrorMensagem("Usuário ou senha incorretos.");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
 
   useEffect(() => {
@@ -44,12 +64,12 @@ const LoginForm = ({ setRedirect, hasLabel, layout }) => {
   return (
     <Form onSubmit={handleSubmit}>
       <FormGroup>
+        <span className="text-danger">{errorMensagem}</span>
         {hasLabel && <Label>Email address</Label>}
         <Input
-          placeholder={!hasLabel ? "Email" : ""}
+          placeholder={!hasLabel ? "Usuário" : ""}
           value={email}
           onChange={({ target }) => setEmail(target.value)}
-          type="email"
         />
       </FormGroup>
       <FormGroup>
@@ -63,7 +83,13 @@ const LoginForm = ({ setRedirect, hasLabel, layout }) => {
       </FormGroup>
       <FormGroup>
         <Button color="falar" block className="mt-3" disabled={isDisabled}>
-          Login
+          {isLoading ? (
+            <div className="spinner-border text-light" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          ) : (
+            "Login"
+          )}
         </Button>
       </FormGroup>
     </Form>
