@@ -11,7 +11,7 @@ import { PesquisarCadastro } from "../becape-components/Pages/PesquisarCadastro"
 import { RamaisGeral } from "../becape-components/Pages/RamaisGeral";
 import { PermissaoRamais } from "../becape-components/Pages/PermissaoRamais";
 import { ConfigUra } from "../becape-components/Pages/Ura/ConfigUra";
-import { Atendedor, Atendentes } from "../becape-components/Pages/Atendentes";
+import { Atendedor } from "../becape-components/Pages/Atendentes";
 import { Conta } from "../becape-components/Pages/Conta";
 
 // import { Ura } from "../becape-components/Pages/Ura";
