@@ -11,15 +11,21 @@ const useApiRequestEffect = (url, data = null) => {
     setIsLoading
   } = useApiRequest();
 
-  const refetch = async () => {
-    setIsLoading(true);
-    setError(null);
+  const refetch = async novaUrl => {
+    try {
+      setIsLoading(true);
+      setError(null);
 
-    const apiClient = new ApiClient();
-    const req = await apiClient.get(url);
-    console.log(req);
-    setResponse(req);
-    setIsLoading(false);
+      const apiClient = new ApiClient();
+      const req = await apiClient.get(novaUrl ? novaUrl : url);
+
+      console.log(req);
+      setResponse(req);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+      setError(err);
+    }
   };
   useEffect(() => {
     refetch();
@@ -35,7 +41,7 @@ const useApiRequest = (method, url, data = null) => {
     message: null,
     error: undefined
   });
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const doRequest = async (tipo, url, data) => {
