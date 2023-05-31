@@ -41,16 +41,36 @@ const ModalAudios = ({ abrirModal, setAbrirModal }) => {
     const audio = e.target.files[0];
     if (audio) {
       console.log(audio);
-      setAudio({ preview: URL.createObjectURL(audio), enviar: audio });
+
+      const file = e.target.files[0];
+
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(file);
+
+      reader.onload = () => {
+        const audioData = reader.result;
+        const audioBlob = new Blob([audioData], { type: "audio/mpeg" });
+        setAudio({
+          preview: URL.createObjectURL(audio),
+          enviar: audio,
+          audioBlob: audioBlob
+        });
+        console.log("carregou");
+      };
     }
   };
 
   const enviarAudio = async e => {
     const formData = new FormData();
-    formData.append("audio", audio.enviar);
+    // formData.append("Arquivo", audio.enviar);
+
+    formData.append("Arquivo", audio.audioBlob);
+    formData.append("Identificador", "23033798-7a40-4702-ab03-5ae8aac0a7ea");
+    formData.append("DescricaoAudio", "teste");
+    formData.append("Id", "23033798-7a40-4702-ab03-5ae8aac0a7ea");
 
     try {
-      const response = await api.post("/audios", formData, {
+      const response = await api.post("/atendedor/audio", formData, {
         headers: {
           "Content-Type": "multipart/form-data"
         }
