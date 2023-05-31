@@ -46,3 +46,11 @@ table.dataTable.display tbody tr.even > .sorting_1 {
 table.dataTable.display tbody tr.even {
   background-color: #f38c0054;
 }
+
+.tabela-campos th {
+  padding: 5px;
+}
+
+.tabela-campos tr > td {
+  padding: 5px;
+}
