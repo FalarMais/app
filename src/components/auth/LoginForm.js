@@ -83,7 +83,7 @@ const LoginForm = ({ setRedirect, hasLabel, layout }) => {
       </FormGroup>
       <FormGroup>
         <Button color="falar" block className="mt-3" disabled={isDisabled}>
-          {isLoading ? (
+          {!isLoading ? (
             <div className="spinner-border text-light" role="status">
               <span className="sr-only">Loading...</span>
             </div>
