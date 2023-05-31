@@ -9,21 +9,33 @@ import { FormAtendedor } from "../../Components/FormAtendedor";
 import { useInicializarTabela } from "../../hooks/useInicializarTabela";
 import { useApiRequest, useApiRequestEffect } from "../../hooks/useApiRequest";
 
-const contaId = Cookies.get("contaId");
-
 const Atendedor = () => {
   const [addAtendedor, setAddAtendedor] = useState(false);
   const [atendedor, setAtendedor] = useState(false);
   const [data, setData] = useState([]);
 
-  const { response, setResponse, refetch } = useApiRequestEffect(
-    `/atendedor/conta/${contaId}`
+  const contaId = Cookies.get("contaId");
+  const { response, setResponse, refetch, isLoading } = useApiRequestEffect(
+    `/conta/atendedor/${contaId}`
   );
 
   useInicializarTabela(data);
 
   const { doRequest } = useApiRequest();
   const history = useHistory();
+
+  useEffect(() => {
+    if (!isLoading && !response.content) {
+      const vazio = {
+        nome: "-",
+        tipoAtendimento: "-",
+        informarPosicao: "-",
+        informarTempoEspera: "-",
+        desligarFimMusica: "-"
+      };
+      setData([vazio]);
+    }
+  }, [isLoading, response.content]);
 
   useEffect(() => {
     window
@@ -33,8 +45,6 @@ const Atendedor = () => {
 
     if (response.content) {
       setData(response.content);
-    } else {
-      setData([]);
     }
 
     if (atendedor) {
