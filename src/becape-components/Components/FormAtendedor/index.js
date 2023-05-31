@@ -5,6 +5,7 @@ import { v4 } from "uuid";
 import Cookies from "js-cookie";
 import { useApiRequest } from "../../hooks/useApiRequest";
 import { toast } from "react-toastify";
+import { ModalAudios } from "../../Pages/Ura/ModalAudios";
 const contaId = Cookies.get("contaId");
 
 export const exemplo = {
@@ -28,13 +29,31 @@ const vazio = {
 };
 const FormAtendedor = ({ tipo, data, refetch }) => {
   const [form, setForm] = useState(data ? data : vazio);
+  const [abrirModal, setAbrirModal] = useState(false);
+
   const { doRequest } = useApiRequest();
 
   useEffect(() => {
     if (data) {
-      setForm(data);
+      var tipo = "";
+
+      switch (data.tipoAtendimento) {
+        case "Simultaneo":
+          tipo = 1;
+          break;
+        case "Transbordo":
+          tipo = 2;
+          break;
+        case "Balanceado":
+          tipo = 3;
+          break;
+        default:
+          tipo = null;
+      }
+      setForm({ ...data, tipoAtendimento: tipo });
     }
   }, [data]);
+
   const changeForm = event => {
     const { name, value } = event.target;
     setForm({ ...form, [name]: value });
@@ -91,6 +110,7 @@ const FormAtendedor = ({ tipo, data, refetch }) => {
 
   return (
     <div id={tipo === "atualizar" && "form-att"} className="my-4">
+      <ModalAudios abrirModal={abrirModal} setAbrirModal={setAbrirModal} />
       <div className="" />
       <form className="needs-validation" noValidate>
         <div className="row">
@@ -132,9 +152,119 @@ const FormAtendedor = ({ tipo, data, refetch }) => {
             </div>
           </div>
 
+          <div className="col-6 mb-4">
+            <div className="d-flex flex-column">
+              <label htmlFor="">Audio de Espera</label>
+              <div>
+                <span className="mr-1">Audio URA EXEMPLO.mp3</span>
+                <button
+                  className="btn btn-falar"
+                  type="button"
+                  onClick={() => setAbrirModal(true)}
+                >
+                  Adicionar áudio
+                </button>
+              </div>
+              <div className="invalid-feedback">Forneça um áudio.</div>
+            </div>
+          </div>
+          {/* <div className="col-6 mb-4">
+            <table className="tabela-campos">
+              {/* <thead>
+                  <th />
+                  <th>
+                    <label htmlFor="">Sim</label>
+                  </th>
+                  <th>
+                    <label htmlFor="">Não</label>
+                  </th>
+                </thead> 
+              <tbody>
+                <tr>
+                  <td>
+                    <label htmlFor="" className="m-0">
+                      Informar posição
+                    </label>
+                  </td>
+
+                  <td>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <label htmlFor="" className="m-0 mr-2">
+                        Sim
+                      </label>
+
+                      <input type="radio" value="" />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <label htmlFor="" className="m-0 mr-2">
+                        Não
+                      </label>
+                      <input type="radio" value="" />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label htmlFor="" className="m-0">
+                      Informar tempo de espera
+                    </label>
+                  </td>
+
+                  <td>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <label htmlFor="" className="m-0 mr-2">
+                        Sim
+                      </label>
+
+                      <input type="radio" value="" />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <label htmlFor="" className="m-0 mr-2">
+                        Não
+                      </label>
+                      <input type="radio" value="" />
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label htmlFor="" className="m-0">
+                      Desligar chamada ao final da musica
+                    </label>
+                  </td>
+
+                  <td>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <label htmlFor="" className="m-0 mr-2">
+                        Sim
+                      </label>
+
+                      <input type="radio" value="" />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <label htmlFor="" className="m-0 mr-2">
+                        Não
+                      </label>
+                      <input type="radio" value="" />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div> */}
+
           <div className="col-3 mb-4">
-            <div>
-              <label htmlFor="">Informar Posição</label>
+            <div className="d-flex">
+              <label className="m-0 mr-1" htmlFor="">
+                Informar Posição:
+              </label>
               <div className="d-flex ">
                 <div className="d-flex align-items-center mr-2">
                   <label
@@ -142,7 +272,7 @@ const FormAtendedor = ({ tipo, data, refetch }) => {
                     className="mr-1"
                     htmlFor=""
                   >
-                    Ligado
+                    Sim
                   </label>
                   <input
                     type="radio"
@@ -154,7 +284,7 @@ const FormAtendedor = ({ tipo, data, refetch }) => {
                 </div>
                 <div className="d-flex align-items-center">
                   <label style={{ marginBottom: 0 }} className="mr-1">
-                    Desligado
+                    Não
                   </label>
                   <input
                     name="informarPosicao"
@@ -170,10 +300,11 @@ const FormAtendedor = ({ tipo, data, refetch }) => {
               </div>
             </div>
           </div>
-
-          <div className="col-3 mb-4">
-            <div>
-              <label htmlFor="">Informar Tempo Espera</label>
+          <div className="col-4 mb-4">
+            <div className="d-flex">
+              <label className="m-0 mr-1" htmlFor="">
+                Informar Tempo Espera:
+              </label>
               <div className="d-flex ">
                 <div className="d-flex align-items-center mr-2">
                   <label
@@ -181,7 +312,7 @@ const FormAtendedor = ({ tipo, data, refetch }) => {
                     className="mr-1"
                     htmlFor=""
                   >
-                    Ligado
+                    Sim
                   </label>
                   <input
                     checked={form.informarTempoEspera === true && true}
@@ -196,7 +327,7 @@ const FormAtendedor = ({ tipo, data, refetch }) => {
                 </div>
                 <div className="d-flex align-items-center">
                   <label style={{ marginBottom: 0 }} className="mr-1">
-                    Desligado
+                    Não
                   </label>
                   <input
                     checked={form.informarTempoEspera === false && true}
@@ -213,9 +344,29 @@ const FormAtendedor = ({ tipo, data, refetch }) => {
             </div>
           </div>
 
-          <div className="col-3 mb-4">
-            <div>
-              <label htmlFor="">Desligar Fim Musica</label>
+          <div className="col-5 mb-4">
+            <div className="d-flex">
+              <label className="m-0" htmlFor="">
+                Informar posição a cada
+              </label>
+              <input
+                style={{ width: 70 }}
+                type="number"
+                className=" mx-2"
+                name="nome"
+              />
+              <label className="m-0" htmlFor="">
+                segundos
+              </label>
+              <div className="invalid-feedback">Forneça .</div>
+            </div>
+          </div>
+
+          <div className="col-6 mb-4">
+            <div className="d-flex">
+              <label className="m-0 mr-1" htmlFor="">
+                Desligar chamada ao final da música:
+              </label>
               <div className="d-flex ">
                 <div className="d-flex align-items-center mr-2">
                   <label
@@ -223,7 +374,7 @@ const FormAtendedor = ({ tipo, data, refetch }) => {
                     className="mr-1"
                     htmlFor=""
                   >
-                    Ligado
+                    Sim
                   </label>
                   <input
                     type="radio"
@@ -238,7 +389,7 @@ const FormAtendedor = ({ tipo, data, refetch }) => {
                 </div>
                 <div className="d-flex align-items-center">
                   <label style={{ marginBottom: 0 }} className="mr-1">
-                    Desligado
+                    Não
                   </label>
                   <input
                     type="radio"

@@ -86,22 +86,22 @@ const FormRamal = ({ tipo, data }) => {
             </div>
           </div>
 
-          {form.tipo === "2" ? (
-            <div className="col-3 mb-4">
-              <div>
-                <label htmlFor="">MAC</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="mac"
-                  onChange={changeForm}
-                  value={form.mac}
-                  required
-                />
+          <div className="col-3 mb-4">
+            <div>
+              <label htmlFor="">MAC Address</label>
+              <input
+                type="text"
+                className="form-control"
+                name="mac"
+                onChange={changeForm}
+                value={form.mac}
+                required={form.tipo === "2" ? true : false}
+              />
+              {form.tipo === "2" ? (
                 <div className="invalid-feedback">Forneça o Mac.</div>
-              </div>
+              ) : null}
             </div>
-          ) : null}
+          </div>
 
           <div className="col-3 mb-4">
             <div>
@@ -182,9 +182,11 @@ const FormRamal = ({ tipo, data }) => {
             </div>
           </div>
 
-          <div className="col-3 mb-4">
-            <div>
-              <label htmlFor="">Ligação Externa</label>
+          <div className="col-4 mb-4">
+            <div className="d-flex">
+              <label className="m-0 mr-1" htmlFor="">
+                Ligação Externa:
+              </label>
               <div className="d-flex ">
                 <div className="d-flex align-items-center mr-2">
                   <label
@@ -192,7 +194,7 @@ const FormRamal = ({ tipo, data }) => {
                     className="mr-1"
                     htmlFor=""
                   >
-                    Ligado
+                    Sim
                   </label>
                   <input
                     type="radio"
@@ -204,7 +206,7 @@ const FormRamal = ({ tipo, data }) => {
                 </div>
                 <div className="d-flex align-items-center">
                   <label style={{ marginBottom: 0 }} className="mr-1">
-                    Desligado
+                    Não
                   </label>
                   <input
                     name="ligacaoExterna"
@@ -219,9 +221,11 @@ const FormRamal = ({ tipo, data }) => {
             </div>
           </div>
 
-          <div className="col-3 mb-4">
-            <div>
-              <label htmlFor="">Ligação Senha</label>
+          <div className="col-4 mb-4">
+            <div className="d-flex">
+              <label className="m-0 mr-1" htmlFor="">
+                Ligação Senha:
+              </label>
               <div className="d-flex ">
                 <div className="d-flex align-items-center mr-2">
                   <label
@@ -229,7 +233,7 @@ const FormRamal = ({ tipo, data }) => {
                     className="mr-1"
                     htmlFor=""
                   >
-                    Ligado
+                    Sim
                   </label>
                   <input
                     checked={form.ligacaoSenha === true && true}
@@ -242,7 +246,7 @@ const FormRamal = ({ tipo, data }) => {
                 </div>
                 <div className="d-flex align-items-center">
                   <label style={{ marginBottom: 0 }} className="mr-1">
-                    Desligado
+                    Não
                   </label>
                   <input
                     checked={form.ligacaoSenha === false && true}
@@ -257,9 +261,11 @@ const FormRamal = ({ tipo, data }) => {
             </div>
           </div>
 
-          <div className="col-3 mb-4">
-            <div>
-              <label htmlFor="">aGrupa</label>
+          <div className="col-4 mb-4">
+            <div className="d-flex">
+              <label className="m-0 mr-1" htmlFor="">
+                aGrupa:
+              </label>
               <div className="d-flex ">
                 <div className="d-flex align-items-center mr-2">
                   <label
@@ -267,7 +273,7 @@ const FormRamal = ({ tipo, data }) => {
                     className="mr-1"
                     htmlFor=""
                   >
-                    Ligado
+                    Sim
                   </label>
                   <input
                     type="radio"
@@ -280,7 +286,7 @@ const FormRamal = ({ tipo, data }) => {
                 </div>
                 <div className="d-flex align-items-center">
                   <label style={{ marginBottom: 0 }} className="mr-1">
-                    Desligado
+                    Não
                   </label>
                   <input
                     type="radio"
@@ -294,6 +300,98 @@ const FormRamal = ({ tipo, data }) => {
               </div>
             </div>
           </div>
+
+          {/* <div className="col-6">
+            <table className="tabela-campos">
+            <thead>
+                  <th />
+                  <th>
+                    <label htmlFor="">Sim</label>
+                  </th>
+                  <th>
+                    <label htmlFor="">Não</label>
+                  </th>
+                </thead> 
+              <tbody>
+                <tr>
+                  <td>
+                    <label htmlFor="" className="m-0">
+                      Ligação externa
+                    </label>
+                  </td>
+
+                  <td>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <label htmlFor="" className="m-0 mr-2">
+                        Sim
+                      </label>
+
+                      <input type="radio" value="" />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <label htmlFor="" className="m-0 mr-2">
+                        Não
+                      </label>
+                      <input type="radio" value="" />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label htmlFor="" className="m-0">
+                      Ligação senha
+                    </label>
+                  </td>
+
+                  <td>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <label htmlFor="" className="m-0 mr-2">
+                        Sim
+                      </label>
+
+                      <input type="radio" value="" />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <label htmlFor="" className="m-0 mr-2">
+                        Não
+                      </label>
+                      <input type="radio" value="" />
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label htmlFor="" className="m-0">
+                      aGrupa
+                    </label>
+                  </td>
+
+                  <td>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <label htmlFor="" className="m-0 mr-2">
+                        Sim
+                      </label>
+
+                      <input type="radio" value="" />
+                    </div>
+                  </td>
+                  <td>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <label htmlFor="" className="m-0 mr-2">
+                        Não
+                      </label>
+                      <input type="radio" value="" />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div> */}
         </div>
         <button
           className="btn btn-outline-falar my-2"
