@@ -10,6 +10,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { api } from "../../services/api";
 
+// import "monaco-editor/esm/vs/editor/editor.all.js";
+// import "monaco-editor/esm/vs/editor/editor.main.css";
+
 const Conta = () => {
   const [formConta, setFormConta] = useState({
     context: "",
@@ -53,7 +56,7 @@ const Conta = () => {
       <CardBody>
         <form className="needs-validation" noValidate>
           <div className="row">
-            <div className="col-4">
+            <div className="col-4 mb-4">
               <div>
                 <label htmlFor="">Context</label>
                 <input
@@ -68,7 +71,7 @@ const Conta = () => {
               </div>
             </div>
 
-            <div className="col-4">
+            <div className="col-4 mb-4">
               <div>
                 <label htmlFor="">Call Limit</label>
                 <input
@@ -82,7 +85,7 @@ const Conta = () => {
                 <div className="invalid-feedback">Forneça Call Limit.</div>
               </div>
             </div>
-            <div className="col-4">
+            <div className="col-4 mb-4">
               <div>
                 <label htmlFor="">Login</label>
                 <input
@@ -95,7 +98,7 @@ const Conta = () => {
                 <div className="invalid-feedback">Forneça Login.</div>
               </div>
             </div>
-            <div className="col-4">
+            <div className="col-4 mb-4">
               <div>
                 <label htmlFor="">Senha</label>
                 <input
@@ -108,7 +111,7 @@ const Conta = () => {
                 <div className="invalid-feedback">Forneça Senha.</div>
               </div>
             </div>
-            <div className="col-4">
+            <div className="col-4 mb-4">
               <div>
                 <label htmlFor="">Hash</label>
                 <input
@@ -117,12 +120,11 @@ const Conta = () => {
                   onChange={e => handleForm(e)}
                   value={formConta.hash}
                   name="hash"
-                  type="number"
                 />
                 <div className="invalid-feedback">Forneça Hash.</div>
               </div>
             </div>
-            <div className="col-4">
+            <div className="col-4 mb-4">
               <div>
                 <label htmlFor="">HOST</label>
                 <input
@@ -135,31 +137,29 @@ const Conta = () => {
                 <div className="invalid-feedback">Forneça Host.</div>
               </div>
             </div>
-            <div className="col-4">
+            <div className="col-6">
               <div>
                 <label htmlFor="">Template SIP</label>
-                <input
+                <textarea
                   required
                   className="form-control"
                   onChange={e => handleForm(e)}
                   name="templateSIP"
                   value={formConta.templateSIP ? null : ""}
-                  type="number"
                 />
                 <div className="invalid-feedback">Forneça Template SIP.</div>
               </div>
             </div>
 
-            <div className="col-4">
+            <div className="col-6">
               <div>
                 <label htmlFor="">Template Extension</label>
-                <input
+                <textarea
                   required
                   className="form-control"
                   onChange={e => handleForm(e)}
                   name="templateExtension"
                   value={formConta.templateExtension ? null : ""}
-                  type="number"
                 />
                 <div className="invalid-feedback">
                   Forneça Template Extension.

@@ -19,15 +19,17 @@ const RamaisGeral = () => {
   const chamadas = [
     {
       codigo: "3445",
-      ramal: "0001",
-      status: 1,
-      tempo: "00:03:00"
+      nome: "nome1",
+      tipo: "A4",
+      modelo: "x",
+      senha: "1"
     },
     {
-      codigo: "0002",
-      ramal: "3445",
-      status: 0,
-      tempo: "00:03:00"
+      codigo: "3445",
+      nome: "nome1",
+      tipo: "A4",
+      modelo: "x",
+      senha: "1"
     }
   ];
 
@@ -74,10 +76,10 @@ const RamaisGeral = () => {
               <table id="example" className="display" style={{ width: "100%" }}>
                 <thead>
                   <tr>
-                    <th>Código</th>
-                    <th>Ramal</th>
-                    <th>Status</th>
-                    <th>ATIVO POR</th>
+                    <th>Nome</th>
+                    <th>Tipo</th>
+                    <th>Modelo</th>
+                    <th>Senha</th>
                     <th />
                   </tr>
                 </thead>
@@ -87,10 +89,10 @@ const RamaisGeral = () => {
                       key={i}
                       onClick={() => setRamal(ramal !== d ? d : null)}
                     >
-                      <td>{d.codigo}</td>
-                      <td>{d.ramal}</td>
-                      <td>{d.status}</td>
-                      <td>{d.tempo}</td>
+                      <td>{d.nome}</td>
+                      <td>{d.tipo}</td>
+                      <td>{d.modelo}</td>
+                      <td>{d.senha}</td>
                       <td>
                         <div
                           style={{
@@ -108,7 +110,10 @@ const RamaisGeral = () => {
               {ramal ? (
                 <div className="my-4">
                   <div className="d-flex justify-content-between">
-                    <h1>Código: {ramal.codigo}</h1>
+                    <h1>
+                      Nome utilizado: nome1
+                      {/* {ramal.codigo} */}
+                    </h1>
                     <span className="text-danger font-weight-bold">
                       <MdDelete size={30} />
                     </span>
