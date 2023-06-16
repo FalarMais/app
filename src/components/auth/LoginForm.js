@@ -24,17 +24,17 @@ const LoginForm = ({ setRedirect, hasLabel, layout }) => {
       Cookies.set("acesso", "true", { expires: 1 });
 
       toast.success(`Logado com ${email}`);
-      setRedirect(true);
       registrarRotas();
+      setRedirect(true);
     } else {
       try {
         const data = {
-          userName: email,
-          password: password
+          email,
+          senha: password
         };
 
-        const responsePost = await doRequest("post", "autenticacao", data);
-
+        const responsePost = await doRequest("post", "Autenticar", data);
+        console.log(responsePost);
         if (responsePost.status === 200) {
           const { email, contaId } = responsePost.content;
           console.log(responsePost);
@@ -52,6 +52,7 @@ const LoginForm = ({ setRedirect, hasLabel, layout }) => {
           setErrorMensagem("Usuário ou senha incorretos.");
         }
       } catch (err) {
+        toast(`${err.message}`);
         console.log(err);
       }
     }
