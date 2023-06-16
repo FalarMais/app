@@ -1,7 +1,7 @@
 import { api } from "./api";
 
 class ApiResponse {
-  constructor(status, content, message, error) {
+  constructor(status, content, error, message) {
     this.status = status;
     this.content = content;
     this.message = message;
@@ -36,17 +36,17 @@ class ApiClient {
     try {
       const response = await api.post(url, data);
       return new ApiResponse(
-        response.status,
+        response.data.statusCode,
         response.data.content,
-        response.data.message,
-        response.data.error
+        response.data.errors,
+        response.data.message
       );
     } catch (error) {
       return new ApiResponse(
-        error.response.status,
-        null,
-        error.response.data.message,
-        error.response.data.error
+        error.data.statusCode,
+        error.data.content,
+        error.data.errors,
+        error.data.message
       );
     }
   }
@@ -55,18 +55,17 @@ class ApiClient {
     try {
       const response = await api.get(url);
       return new ApiResponse(
-        response.status,
-        // response.data,
+        response.data.statusCode,
         response.data.content,
-        response.data.message,
-        response.data.error
+        response.data.errors,
+        response.data.message
       );
     } catch (error) {
       return new ApiResponse(
-        error.response.status,
-        null,
-        error.response.data.message,
-        error.response.data.error
+        error.data.statusCode,
+        error.data.content,
+        error.data.errors,
+        error.data.message
       );
     }
   }
@@ -75,18 +74,17 @@ class ApiClient {
     try {
       const response = await api.delete(url);
       return new ApiResponse(
-        response.status,
-        // response.data,
+        response.data.statusCode,
         response.data.content,
-        response.data.message,
-        response.data.error
+        response.data.errors,
+        response.data.message
       );
     } catch (error) {
       return new ApiResponse(
-        error.response.status,
-        null,
-        error.response.data.message,
-        error.response.data.error
+        error.data.statusCode,
+        error.data.content,
+        error.data.errors,
+        error.data.message
       );
     }
   }
@@ -95,18 +93,17 @@ class ApiClient {
     try {
       const response = await api.put(url, data);
       return new ApiResponse(
-        response.status,
-        // response.data,
+        response.data.statusCode,
         response.data.content,
-        response.data.message,
-        response.data.error
+        response.data.errors,
+        response.data.message
       );
     } catch (error) {
       return new ApiResponse(
-        error.response.status,
-        null,
-        error.response.data.message,
-        error.response.data.error
+        error.data.statusCode,
+        error.data.content,
+        error.data.errors,
+        error.data.message
       );
     }
   }
