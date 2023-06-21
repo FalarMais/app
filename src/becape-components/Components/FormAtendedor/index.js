@@ -20,11 +20,14 @@ export const exemplo = {
 
 const vazio = {
   nome: "",
+  descrição: "",
   tipoAtendimento: "",
+  informaPosicaoSegundos: 0,
   informarPosicao: false,
   informarTempoEspera: false,
   desligarFimMusica: false,
   contaId: contaId,
+  uraId: "00000000-0000-0000-0000-000000000000",
   id: v4()
 };
 const FormAtendedor = ({ tipo, data, refetch }) => {
@@ -50,7 +53,7 @@ const FormAtendedor = ({ tipo, data, refetch }) => {
         default:
           tipo = null;
       }
-      setForm({ ...data, tipoAtendimento: tipo });
+      setForm(data);
     }
   }, [data]);
 
@@ -67,17 +70,18 @@ const FormAtendedor = ({ tipo, data, refetch }) => {
         id: v4()
       };
 
-      const request = await doRequest("post", "/atendedor", dtform);
-      const { status, message } = request;
+      const request = await doRequest("post", "/Atendedor", dtform);
+      console.log(request);
+      const { status } = request;
 
-      if (status === 200 || request === 201) {
+      if (status === 201) {
         revalidarForm();
         refetch();
         setForm(vazio);
 
         toast.success("Atendente criado com sucesso!");
       } else {
-        toast.warn(message);
+        toast.warn("Não foi possível criar o Atendedor.");
       }
     }
 
@@ -87,15 +91,16 @@ const FormAtendedor = ({ tipo, data, refetch }) => {
         informarPosicao: form.informarPosicao,
         informarTempoEspera: form.informarTempoEspera,
         desligarFimMusica: form.desligarFimMusica,
+        uraId: form.uraId,
         contaId: contaId,
         id: form.id,
+        descrição: form.descrição,
+        informaPosicaoSegundos: form.informaPosicaoSegundos,
         tipoAtendimento: Number(form.tipoAtendimento)
       };
 
-      console.log(dtform);
-      const request = await doRequest("put", `/atendedor/${form.id}`, dtform);
-      console.log(request);
-      const { status, message } = request;
+      const request = await doRequest("put", `/Atendedor/${form.id}`, dtform);
+      const { status } = request;
 
       if (status === 202 || status === 200) {
         revalidarForm();
@@ -103,7 +108,7 @@ const FormAtendedor = ({ tipo, data, refetch }) => {
         sessionStorage.setItem("formAtendedor", JSON.stringify(dtform));
         toast.success("Atendente atualizado");
       } else {
-        toast.warn(message);
+        toast.warn("Não foi possível atualizar o Atendedor.");
       }
     }
   }
@@ -114,7 +119,7 @@ const FormAtendedor = ({ tipo, data, refetch }) => {
       <div className="" />
       <form className="needs-validation" noValidate>
         <div className="row">
-          <div className="col-3 mb-4">
+          <div className="col-4 mb-4">
             <div>
               <label htmlFor="">Nome</label>
               <input
@@ -129,7 +134,22 @@ const FormAtendedor = ({ tipo, data, refetch }) => {
             </div>
           </div>
 
-          <div className="col-3 mb-4">
+          <div className="col-4 mb-4">
+            <div>
+              <label htmlFor="">Descrição</label>
+              <textarea
+                type="text"
+                className="form-control"
+                onChange={changeForm}
+                value={form.descrição}
+                name="descrição"
+                required
+              />
+              <div className="invalid-feedback">Forneça a descrição.</div>
+            </div>
+          </div>
+
+          <div className="col-4 mb-4">
             <div>
               <label htmlFor="">Tipo Atendimento</label>
               <select
@@ -149,6 +169,21 @@ const FormAtendedor = ({ tipo, data, refetch }) => {
               <div className="invalid-feedback">
                 Selecione o Tipo do Atendimento
               </div>
+            </div>
+          </div>
+
+          <div className="col-6 mb-4">
+            <div>
+              <label htmlFor="">Ura ID</label>
+              <input
+                type="text"
+                className="form-control"
+                onChange={changeForm}
+                value={form.uraId}
+                name="uraId"
+                required
+              />
+              <div className="invalid-feedback">Forneça o URA ID.</div>
             </div>
           </div>
 
@@ -353,7 +388,9 @@ const FormAtendedor = ({ tipo, data, refetch }) => {
                 style={{ width: 70 }}
                 type="number"
                 className=" mx-2"
-                name="nome"
+                onChange={changeForm}
+                value={form.informaPosicaoSegundos}
+                name="informaPosicaoSegundos"
               />
               <label className="m-0" htmlFor="">
                 segundos
