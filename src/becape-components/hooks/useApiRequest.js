@@ -75,9 +75,6 @@ const useApiRequest = (method, url, data = null) => {
     setResponse(response);
     setIsLoading(false);
 
-    if (!response.isOk()) {
-      setError(response.getErrorMessage());
-    }
     return response;
   };
 
