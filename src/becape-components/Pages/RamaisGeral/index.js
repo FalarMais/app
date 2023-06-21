@@ -7,43 +7,83 @@ import { Card, CardBody } from "reactstrap";
 import FalconCardHeader from "../../../components/common/FalconCardHeader";
 import { FormRamal, exemplo } from "../../Components/FormRamal";
 import { useInicializarTabela } from "../../hooks/useInicializarTabela";
+import Cookies from "js-cookie";
+import { useApiRequest, useApiRequestEffect } from "../../hooks/useApiRequest";
 
 const RamaisGeral = () => {
   const [data, setData] = useState([]);
   const [ramal, setRamal] = useState(null);
   const [addRamal, setAddRamal] = useState(false);
+  const [atendedores, setAtendedores] = useState([]);
+
+  const contaId = Cookies.get("contaId");
+  const { doRequest } = useApiRequest();
+
+  const { response, setResponse, refetch, isLoading } = useApiRequestEffect(
+    `/Conta/${contaId}/ramal`
+  );
 
   const history = useHistory();
   useInicializarTabela(data);
 
-  const chamadas = [
-    {
-      codigo: "3445",
-      nome: "nome1",
-      tipo: "A4",
-      modelo: "x",
-      senha: "1"
-    },
-    {
-      codigo: "3445",
-      nome: "nome1",
-      tipo: "A4",
-      modelo: "x",
-      senha: "1"
+  useEffect(() => {
+    if (!isLoading && !response.content) {
+      const vazio = {
+        codigo: "",
+        nome: "",
+        tipo: "",
+        modelo: "",
+        senha: ""
+      };
+      setData([vazio]);
     }
-  ];
+  }, [isLoading, response.content]);
 
   useEffect(() => {
-    setTimeout(() => {
-      window
-        .$("#example")
-        .DataTable()
-        .destroy();
+    window
+      .$("#example")
+      .DataTable()
+      .destroy();
 
-      setData(chamadas);
-    }, 1000);
+    if (response.content) {
+      setData(response.content);
+    }
+
+    if (ramal) {
+      let cl = JSON.parse(sessionStorage.getItem("formRamal"));
+      setRamal(false);
+
+      setTimeout(() => {
+        setRamal(cl);
+      }, 100);
+    }
     // eslint-disable-next-line
+  }, [response]);
+
+  useEffect(() => {
+    (async () => {
+      const response = await doRequest("get", `/Conta/${contaId}/atendedor`);
+      if (response.content) {
+        setAtendedores(response.content);
+      }
+    })();
   }, []);
+
+  const excluirRamais = async (e, id) => {
+    e.stopPropagation();
+    setRamal(false);
+    const verificarSolicitacao = window.confirm(
+      `Deseja excluir a chamada ${id}?`
+    );
+
+    if (verificarSolicitacao) {
+      try {
+        await doRequest("delete", `/Ramais/${id}`);
+        const contentFiltrado = data.filter(a => a.id !== id);
+        setResponse({ content: contentFiltrado });
+      } catch (err) {}
+    }
+  };
 
   return (
     <Card>
@@ -66,7 +106,7 @@ const RamaisGeral = () => {
         </div>
         {addRamal ? (
           <div className="mb-3">
-            <FormRamal tipo="add" />
+            <FormRamal tipo="add" refetch={refetch} atendedores={atendedores} />
           </div>
         ) : null}
 
@@ -79,7 +119,7 @@ const RamaisGeral = () => {
                     <th>Nome</th>
                     <th>Tipo</th>
                     <th>Modelo</th>
-                    <th>Senha</th>
+                    <th>Mac</th>
                     <th />
                   </tr>
                 </thead>
@@ -89,12 +129,13 @@ const RamaisGeral = () => {
                       key={i}
                       onClick={() => setRamal(ramal !== d ? d : null)}
                     >
-                      <td>{d.nome}</td>
+                      <td>{d.nomeUtilizador}</td>
                       <td>{d.tipo}</td>
                       <td>{d.modelo}</td>
-                      <td>{d.senha}</td>
+                      <td>{d.mac}</td>
                       <td>
                         <div
+                          onClick={e => excluirRamais(e, d.id)}
                           style={{
                             backgroundColor: d.status ? "green" : "red",
                             width: 20,
@@ -108,18 +149,12 @@ const RamaisGeral = () => {
                 </tbody>
               </table>
               {ramal ? (
-                <div className="my-4">
-                  <div className="d-flex justify-content-between">
-                    <h1>
-                      Nome utilizado: nome1
-                      {/* {ramal.codigo} */}
-                    </h1>
-                    <span className="text-danger font-weight-bold">
-                      <MdDelete size={30} />
-                    </span>
-                  </div>
-                  <FormRamal tipo="atualizar" data={exemplo} />
-                </div>
+                <FormRamal
+                  tipo="atualizar"
+                  data={ramal}
+                  refetch={refetch}
+                  atendedores={atendedores}
+                />
               ) : null}
             </>
           ) : (
