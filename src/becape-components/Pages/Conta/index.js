@@ -10,6 +10,11 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { api } from "../../services/api";
 
+import AceEditor from "react-ace";
+import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/theme-textmate";
+import "ace-builds/src-noconflict/worker-javascript";
+
 // import "monaco-editor/esm/vs/editor/editor.all.js";
 // import "monaco-editor/esm/vs/editor/editor.main.css";
 
@@ -140,12 +145,35 @@ const Conta = () => {
             <div className="col-6">
               <div>
                 <label htmlFor="">Template SIP</label>
-                <textarea
+                {/* <textarea
                   required
                   className="form-control"
                   onChange={e => handleForm(e)}
                   name="templateSIP"
                   value={formConta.templateSIP ? null : ""}
+                /> */}
+                <AceEditor
+                  mode="javascript"
+                  theme="textmate"
+                  enableLiveAutocompletion={true}
+                  name="template-sip"
+                  value="/**
+                  * In fact, you're looking at ACE right now. Go ahead and play with it!
+                  *
+                  * We are currently showing off the JavaScript mode. ACE has support for 45
+                  * language modes and 24 color themes!
+                  */
+                 
+                 function add(x, y) {
+                     var result = x + y;
+                     return result;
+                 }
+                 123/3
+                 var addResult = add(3, 2);
+                 console.log(addResult);
+                 "
+                  onv
+                  editorProps={{ $blockScrolling: true }}
                 />
                 <div className="invalid-feedback">Forneça Template SIP.</div>
               </div>
@@ -154,12 +182,19 @@ const Conta = () => {
             <div className="col-6">
               <div>
                 <label htmlFor="">Template Extension</label>
-                <textarea
+                {/* <textarea
                   required
                   className="form-control"
                   onChange={e => handleForm(e)}
-                  name="templateExtension"
-                  value={formConta.templateExtension ? null : ""}
+                  name="templateSIP"
+                  value={formConta.templateSIP ? null : ""}
+                /> */}
+                <AceEditor
+                  mode="javascript"
+                  theme="textmate"
+                  enableLiveAutocompletion={true}
+                  name="template-extension"
+                  editorProps={{ $blockScrolling: true }}
                 />
                 <div className="invalid-feedback">
                   Forneça Template Extension.
