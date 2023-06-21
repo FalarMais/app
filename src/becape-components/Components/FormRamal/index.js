@@ -1,21 +1,11 @@
 import React, { useState } from "react";
-import { validarForm } from "../../utils/validarForm";
-
-export const exemplo = {
-  nomeUtilizador: "teste",
-  tipo: "1",
-  senha: "string",
-  callLimit: 0,
-  ligacaoExterna: true,
-  ligacaoSenha: true,
-  aGrupa: true,
-  contaId: "e1d6605a-3f43-4a3b-8aa5-3820ba62953d",
-  pickupGroup: "string",
-  callGroup: "string",
-  mac: "string",
-  modelo: 0,
-  id: "1a6b18db-0f1b-4e12-b6d8-10aa65665e97"
-};
+import { revalidarForm, validarForm } from "../../utils/validarForm";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
+import { v4 } from "uuid";
+import { useApiRequest } from "../../hooks/useApiRequest";
+import { toast } from "react-toastify";
+const contaId = Cookies.get("contaId");
 
 const vazio = {
   nomeUtilizador: "",
@@ -25,24 +15,74 @@ const vazio = {
   ligacaoExterna: false,
   ligacaoSenha: false,
   aGrupa: false,
-  contaId: "e1d6605a-3f43-4a3b-8aa5-3820ba62953d",
+  contaId,
   pickupGroup: "",
   callGroup: "",
   mac: "",
-  modelo: 0,
-  id: "1a6b18db-0f1b-4e12-b6d8-10aa65665e97"
+  modelo: "",
+  id: "1a6b18db-0f1b-4e12-b6d8-10aa65665e97",
+  atendedorId: null
 };
-const FormRamal = ({ tipo, data }) => {
+const FormRamal = ({ tipo, data, refetch, atendedores }) => {
   const [form, setForm] = useState(data ? data : vazio);
+  const { doRequest } = useApiRequest();
 
   const changeForm = event => {
     const { name, value } = event.target;
     setForm({ ...form, [name]: value });
   };
 
-  function adicionarRamal() {
-    console.log(form);
+  async function adicionarRamal() {
+    if (tipo === "add") {
+      const dtform = {
+        ...form,
+        tipo: Number(form.tipo),
+        callLimit: Number(form.callLimit),
+        id: v4()
+      };
+
+      const request = await doRequest("post", "/Ramal", dtform);
+      const { status } = request;
+
+      if (status === 201) {
+        revalidarForm();
+        refetch();
+        setForm(vazio);
+
+        toast.success("Ramal criado com sucesso!");
+      } else {
+        toast.warn("Não foi possível criar o Atendedor.");
+      }
+    }
+
+    if (tipo === "atualizar") {
+      const dtform = {
+        ...form,
+        tipo: Number(form.tipo),
+        callLimit: Number(form.callLimit)
+      };
+
+      console.log(dtform);
+      const request = await doRequest("put", `/Ramal/${form.id}`, dtform);
+      const { status } = request;
+
+      if (status === 202 || status === 200) {
+        revalidarForm();
+        refetch();
+        sessionStorage.setItem("formRamal", JSON.stringify(dtform));
+        toast.success("Atendente atualizado");
+      } else {
+        toast.warn("Não foi possível atualizar o Atendedor.");
+      }
+    }
   }
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+      setForm(data);
+    }
+  }, [data]);
 
   return (
     <div className="my-4">
@@ -110,7 +150,6 @@ const FormRamal = ({ tipo, data }) => {
                 name="modelo"
                 onChange={changeForm}
                 value={form.modelo}
-                type="number"
                 className="form-control"
                 required
               />
@@ -298,6 +337,26 @@ const FormRamal = ({ tipo, data }) => {
                   />
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div className="col-3 mb-4">
+            <div>
+              <label htmlFor="">Atendedor</label>
+              <select
+                name="atendedorId"
+                id=""
+                className="form-control"
+                value={form.atendedorId}
+                onChange={changeForm}
+                required
+              >
+                <option value="null">--SELECIONE--</option>
+                {atendedores.map(atendedor => (
+                  <option value={atendedor.id}>{atendedor.descrição}</option>
+                ))}
+              </select>
+              <div className="invalid-feedback">Selecione o Atendedor</div>
             </div>
           </div>
 
