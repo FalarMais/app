@@ -16,7 +16,7 @@ const Atendedor = () => {
 
   const contaId = Cookies.get("contaId");
   const { response, setResponse, refetch, isLoading } = useApiRequestEffect(
-    `/conta/atendedor/${contaId}`
+    `/Conta/${contaId}/atendedor`
   );
 
   useInicializarTabela(data);
@@ -60,14 +60,14 @@ const Atendedor = () => {
 
   const excluirAtendedor = async (e, id) => {
     e.stopPropagation();
-    setAtendedor(null);
+    setAtendedor(false);
     const verificarSolicitacao = window.confirm(
       `Deseja excluir a chamada ${id}?`
     );
 
     if (verificarSolicitacao) {
       try {
-        await doRequest("delete", `/atendedor/${id}`);
+        await doRequest("delete", `/Atendedor/${id}`);
         const contentFiltrado = data.filter(a => a.id !== id);
         setResponse({ content: contentFiltrado });
       } catch (err) {}
