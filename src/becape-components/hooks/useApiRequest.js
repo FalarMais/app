@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { ApiClient } from "../services/ApiClient";
+import { toast } from "react-toastify";
 
 const useApiRequestEffect = (url, data = null) => {
   const {
@@ -22,6 +23,7 @@ const useApiRequestEffect = (url, data = null) => {
       console.log(req);
       setResponse(req);
     } catch (err) {
+      toast.error("Erro ao realizar requisição!");
       console.log(err);
       setError(err);
     }
@@ -69,7 +71,10 @@ const useApiRequest = (method, url, data = null) => {
           throw new Error(`Método HTTP inválido: ${tipo}`);
       }
     } catch (err) {
-      console.log("deu erro");
+      console.log(err, response);
+      setResponse(response);
+
+      return response;
     }
 
     setResponse(response);
