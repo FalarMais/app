@@ -1,24 +1,27 @@
 import React, { useState } from "react";
-import { validarForm } from "../../utils/validarForm";
+import { revalidarForm, validarForm } from "../../utils/validarForm";
+import { v4 } from "uuid";
+import { toast } from "react-toastify";
+import { useApiRequest } from "../../hooks/useApiRequest";
 
 const vazio = {
-  audioId: "d6e07165-c49f-41db-a80c-06faaf69746a",
   contaId: "c9ad7bd4-8fdc-4ea4-9a92-c2698aa153e2",
   textoUra: "",
   audioOuTexto: null,
   maxEsperaOpcao: "",
   maxTentativas: "",
-  idAudioErro: null,
   textoErro: "",
   audioOuTextoErro: null,
   idAtendedorErro: null,
   discagemDireta: null,
   discarAntesTermino: null,
+  descrição: "",
   id: "5778f879-0450-4eaa-b34d-d5ac8ec99759"
 };
 
-const FormUra = ({ tipo, data, refetch, atendedor = [] }) => {
+const FormUra = ({ tipo, data, refetch, atendedores = [] }) => {
   const [formURA, setFormURA] = useState(data ? data : vazio);
+  const { doRequest } = useApiRequest();
 
   function handleForm(event) {
     const { name, value } = event.target;
@@ -29,14 +32,48 @@ const FormUra = ({ tipo, data, refetch, atendedor = [] }) => {
 
   async function adicionarUra(tipo) {
     if (tipo === "add") {
+      const dtform = {
+        ...formURA,
+        id: v4()
+      };
+      console.log(dtform);
+      try {
+        const request = await doRequest("post", `/Ura`, dtform);
+        const { status } = request;
+
+        if (status === 201) {
+          revalidarForm(`formURA-${tipo}`);
+          refetch();
+          setFormURA(vazio);
+
+          toast.success("Ura criado com sucesso!");
+        } else {
+          toast.warn("Não foi possível criar o Ura.");
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
 
     if (tipo === "atualizar") {
+      try {
+        const request = await doRequest("put", `/Ura/${formURA.id}`, {
+          ...formURA
+        });
+        console.log(request.status);
+        revalidarForm(`formURA-${tipo}`);
+        refetch();
+        sessionStorage.setItem("formUra", JSON.stringify(formURA));
+
+        toast.success("Ura atualizado com sucesso!");
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 
   return (
-    <form className="needs-validation" noValidate>
+    <form className={`needs-validation formURA-${tipo}`} noValidate>
       <div className="row">
         <div className="col-6 mb-4">
           <div className="d-flex flex-column">
@@ -141,31 +178,21 @@ const FormUra = ({ tipo, data, refetch, atendedor = [] }) => {
           </div>
         </div>
 
-        <div className="col-4 mb-4">
+        <div className="col-3">
           <div>
-            <label htmlFor="">Atendedor Padrão:</label>
-            <select
+            <label htmlFor="">Descrição</label>
+            <input
               required
-              type="text"
               className="form-control"
               onChange={e => handleForm(e)}
-              name="idAtendedorErro"
-              value={formURA.idAtendedorErro}
-            >
-              <option value="" />
-
-              <option value="1" />
-              {atendedor.map(a => (
-                <option value={a.id}>{`${a.nome}`}</option>
-              ))}
-            </select>
-            <div className="invalid-feedback">
-              Selecione um numero Atendedor Padrão.
-            </div>
+              name="descrição"
+              value={formURA.descrição}
+            />
+            <div className="invalid-feedback">Forneça uma Descrição.</div>
           </div>
         </div>
 
-        <div className="col-4">
+        <div className="col-3">
           <div>
             <label htmlFor="">Máx. Espera Opção</label>
             <input
@@ -182,7 +209,7 @@ const FormUra = ({ tipo, data, refetch, atendedor = [] }) => {
             </div>
           </div>
         </div>
-        <div className="col-4">
+        <div className="col-3">
           <div>
             <label htmlFor="">Máx. Tentativas</label>
             <input
@@ -195,6 +222,28 @@ const FormUra = ({ tipo, data, refetch, atendedor = [] }) => {
             />
             <div className="invalid-feedback">
               Forneça um numero para o Máximo de tentativas.
+            </div>
+          </div>
+        </div>
+
+        <div className="col-3 mb-4">
+          <div>
+            <label htmlFor="">Atendedor Padrão:</label>
+            <select
+              required
+              type="text"
+              className="form-control"
+              onChange={e => handleForm(e)}
+              name="idAtendedorErro"
+              value={formURA.idAtendedorErro}
+            >
+              <option value="1" />
+              {atendedores.map((atendedor, i) => (
+                <option value={atendedor.id}>{`${atendedor.descrição}`}</option>
+              ))}
+            </select>
+            <div className="invalid-feedback">
+              Selecione um numero Atendedor Padrão.
             </div>
           </div>
         </div>
@@ -355,7 +404,9 @@ const FormUra = ({ tipo, data, refetch, atendedor = [] }) => {
       <button
         className="btn btn-outline-falar my-2"
         type="submit"
-        onClick={e => validarForm(e, () => adicionarUra(tipo))}
+        onClick={e =>
+          validarForm(e, () => adicionarUra(tipo), `formURA-${tipo}`)
+        }
       >
         {tipo}
       </button>

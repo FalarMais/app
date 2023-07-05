@@ -38,21 +38,6 @@ const FormAtendedor = ({ tipo, data, refetch }) => {
 
   useEffect(() => {
     if (data) {
-      var tipo = "";
-
-      switch (data.tipoAtendimento) {
-        case "Simultaneo":
-          tipo = 1;
-          break;
-        case "Transbordo":
-          tipo = 2;
-          break;
-        case "Balanceado":
-          tipo = 3;
-          break;
-        default:
-          tipo = null;
-      }
       setForm(data);
     }
   }, [data]);
