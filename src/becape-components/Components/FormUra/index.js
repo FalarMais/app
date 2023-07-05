@@ -12,9 +12,9 @@ const vazio = {
   maxTentativas: "",
   textoErro: "",
   audioOuTextoErro: null,
-  idAtendedorErro: null,
-  discagemDireta: null,
-  discarAntesTermino: null,
+  atendedorErrorId: "",
+  discagemDireta: false,
+  discarAntesTermino: false,
   descrição: "",
   id: "5778f879-0450-4eaa-b34d-d5ac8ec99759"
 };
@@ -234,8 +234,8 @@ const FormUra = ({ tipo, data, refetch, atendedores = [] }) => {
               type="text"
               className="form-control"
               onChange={e => handleForm(e)}
-              name="idAtendedorErro"
-              value={formURA.idAtendedorErro}
+              name="atendedorErrorId"
+              value={formURA.atendedorErrorId}
             >
               <option value="1" />
               {atendedores.map((atendedor, i) => (
