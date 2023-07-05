@@ -7,12 +7,13 @@ import { useInicializarTabela } from "../../hooks/useInicializarTabela";
 import "./tabela.css";
 import { useApiRequest } from "../../hooks/useApiRequest";
 import audioFile from "./audio.mp3";
+/*
 import {
   calcularMinutosSegundos,
   setarHorarios,
   verificarDatas
 } from "../../utils/setarHorarios";
-
+*/
 const TabelaChamados = ({ tipo, dataChamadas, setDataChamadas, isLoading }) => {
   const [data, setData] = useState([]);
 
@@ -75,7 +76,7 @@ const TabelaChamados = ({ tipo, dataChamadas, setDataChamadas, isLoading }) => {
     }
   };
 
-  const verificarDuracaoChamada = data => {
+  /*const verificarDuracaoChamada = data => {
     const existeCamposNulos = verificarDatas(
       data.horaFim,
       data.horaAtendimento
@@ -92,7 +93,7 @@ const TabelaChamados = ({ tipo, dataChamadas, setDataChamadas, isLoading }) => {
 
     const tempoFinal = calcularMinutosSegundos(tempoDeEsperaEmMilissegundos);
     return tempoFinal;
-  };
+  }; */
 
   const abrirGravacao = async id => {
     const audioEmBinario = await converterBinario();
@@ -186,7 +187,7 @@ const TabelaChamados = ({ tipo, dataChamadas, setDataChamadas, isLoading }) => {
                 <td>{d.horaInicio}</td>
                 <td>{d.horaAtendimento}</td>
                 <td>{d.horaFim}</td>
-                <td>{verificarDuracaoChamada(d)}</td>
+                <td> -{/* {verificarDuracaoChamada(d)} */}</td>
                 <td>
                   {d.id ? (
                     <div className="d-flex">
