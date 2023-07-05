@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
-const useInicializarTabela = data => {
+const useInicializarTabela = (data, idTabela) => {
   const init = data => {
     if (data.length > 0) {
-      window.$("#example").DataTable({
+      window.$(`#${idTabela ? idTabela : "example"}`).DataTable({
         responsive: true,
         rowReorder: {
           selector: "td:nth-child(2)"
@@ -16,6 +16,7 @@ const useInicializarTabela = data => {
   };
   useEffect(() => {
     init(data);
+    // eslint-disable-next-line
   }, [data]);
 };
 
