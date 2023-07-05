@@ -25,7 +25,7 @@ const Atendedor = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (!isLoading && !response.content) {
+    if (!isLoading && (!response.content || response.content.length === 0)) {
       const vazio = {
         nome: "-",
         tipoAtendimento: "-",

@@ -8,30 +8,30 @@ import { useState } from "react";
 import { FormUra } from "../../Components/FormUra";
 import Cookies from "js-cookie";
 import {
+  useApiRequest,
   // useApiRequest,
   useApiRequestEffect
 } from "../../hooks/useApiRequest";
 import { useInicializarTabela } from "../../hooks/useInicializarTabela";
+import { toast } from "react-toastify";
 
 const ConfigUra = () => {
+  const contaId = Cookies.get("contaId");
+
   const [addUra, setAddUra] = useState(false);
   const [ura, setUra] = useState(false);
   const [data, setData] = useState([]);
-  const contaId = Cookies.get("contaId");
-  const {
-    response,
-    // setResponse,
-    refetch,
-    isLoading
-  } = useApiRequestEffect(`/ura/conta/${contaId}`);
+  const [atendedores, setAtendedores] = useState([]);
 
   useInicializarTabela(data);
-
-  // const { doRequest } = useApiRequest();
   const history = useHistory();
+  const { doRequest } = useApiRequest();
+  const { response, setResponse, refetch, isLoading } = useApiRequestEffect(
+    `/Conta/${contaId}/ura`
+  );
 
   useEffect(() => {
-    if (!isLoading && !response.content) {
+    if (!isLoading && (!response.content || response.content.length === 0)) {
       const vazio = {
         id: 123,
         nome: "-",
@@ -52,6 +52,7 @@ const ConfigUra = () => {
 
     if (response.content) {
       setData(response.content);
+      console.log(response.content);
     }
 
     if (ura) {
@@ -66,10 +67,39 @@ const ConfigUra = () => {
   }, [response]);
 
   const editarUra = d => {
+    console.log(d, d.id);
     setUra(ura.id === d.id ? false : d);
   };
 
-  const excluirUra = () => {};
+  const excluirUra = async (event, ura) => {
+    event.stopPropagation();
+    setUra(false);
+    const verificarSolicitacao = window.confirm(
+      `Deseja excluir a ura ${ura.descrição}?`
+    );
+
+    if (verificarSolicitacao) {
+      try {
+        await doRequest("delete", `/Ura/${ura.id}`);
+        const contentFiltrado = data.filter(a => a.id !== ura.id);
+        setResponse({ content: contentFiltrado });
+        toast.success("Ura deletada com sucesso");
+      } catch (err) {
+        toast.error("Falha ao deletar URA");
+      }
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      const response = await doRequest("get", `/Conta/${contaId}/atendedor`);
+      if (response.content) {
+        setAtendedores(response.content);
+      }
+    })();
+    //eslint-disable-next-line
+  }, [contaId]);
+
   return (
     <Card>
       <FalconCardHeader title={`URA`} titleClass="text-falar">
@@ -97,7 +127,7 @@ const ConfigUra = () => {
         </div>
         {addUra === true ? (
           <div className="mb-3">
-            <FormUra tipo="add" refetch={refetch} />
+            <FormUra tipo="add" refetch={refetch} atendedores={atendedores} />
           </div>
         ) : null}
 
@@ -117,13 +147,13 @@ const ConfigUra = () => {
                 <tbody>
                   {data.map((d, i) => (
                     <tr key={i} onClick={() => editarUra(d)}>
-                      <td>desc</td>
+                      <td>{d.descrição}</td>
                       <td>{String(d.audioOuTexto)}</td>
                       <td>{String(d.audioOuTextoErro)}</td>
-                      <td>{String(d.discagemDireta)}</td>
+                      <td>{d.discagemDireta ? "Sim" : "Não"}</td>
                       <td>
                         <div
-                          onClick={e => excluirUra(e, d.id)}
+                          onClick={e => excluirUra(e, d)}
                           style={{
                             backgroundColor: d.status ? "green" : "red",
                             width: 20,
@@ -138,7 +168,12 @@ const ConfigUra = () => {
               </table>
               {ura ? (
                 <div className="my-4">
-                  <FormUra tipo="atualizar" data={ura} refetch={refetch} />
+                  <FormUra
+                    tipo="atualizar"
+                    data={ura}
+                    refetch={refetch}
+                    atendedores={atendedores}
+                  />
                 </div>
               ) : null}
             </div>

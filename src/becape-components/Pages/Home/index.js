@@ -4,18 +4,46 @@ import { Cards } from "./Cards";
 import { TabelaChamados } from "../../Components/TabelaChamados";
 import { Card } from "reactstrap";
 import { useEffect } from "react";
-import { useApiRequestEffect } from "../../hooks/useApiRequest";
 import Cookies from "js-cookie";
 import moment from "moment";
 import { Grafico } from "./Grafico";
+import axios from "axios";
 
-const hoje = moment().format("DD-MM-YYYY");
+const hoje = moment().format("YYYY-MM-DD");
 const Home = () => {
   const contaId = Cookies.get("contaId");
   const [datas, setDatas] = useState(hoje);
-  const { response, setResponse, isLoading, refetch } = useApiRequestEffect(
-    `chamada/periodo?contaid=${contaId}&dataInicial=${datas}`
-  );
+  const [response, setResponse] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // const { response, setResponse, isLoading, refetch } = useApiRequestEffect(
+  //   `chamada/periodo?contaid=${contaId}&dataInicial=${datas}`
+  // );
+
+  const refetch = async () => {
+    try {
+      const dataPost = {
+        contaId,
+        datas
+      };
+      const response = await axios.get(
+        `http://165.22.184.175/conta-data?contaId=${contaId}&datainicio=0001-01-01&datafim=0001-01-01`,
+        dataPost
+      );
+      setResponse(response.data);
+      setIsLoading(false);
+    } catch (err) {
+      if (err.response.data) {
+        setResponse(err.response.data);
+      }
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    refetch();
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     const momentt = moment().format("DD-MM-YYYY");

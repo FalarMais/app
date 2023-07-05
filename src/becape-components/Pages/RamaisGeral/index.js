@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { BsArrowLeft } from "react-icons/bs";
-import { MdDelete } from "react-icons/md";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Card, CardBody } from "reactstrap";
-import FalconCardHeader from "../../../components/common/FalconCardHeader";
-import { FormRamal, exemplo } from "../../Components/FormRamal";
-import { useInicializarTabela } from "../../hooks/useInicializarTabela";
+import { BsArrowLeft } from "react-icons/bs";
 import Cookies from "js-cookie";
+
+import FalconCardHeader from "../../../components/common/FalconCardHeader";
+import { FormRamal } from "../../Components/FormRamal";
+import { useInicializarTabela } from "../../hooks/useInicializarTabela";
 import { useApiRequest, useApiRequestEffect } from "../../hooks/useApiRequest";
 
 const RamaisGeral = () => {
@@ -27,7 +27,7 @@ const RamaisGeral = () => {
   useInicializarTabela(data);
 
   useEffect(() => {
-    if (!isLoading && !response.content) {
+    if (!isLoading && (!response.content || response.content.length === 0)) {
       const vazio = {
         codigo: "",
         nome: "",
@@ -67,7 +67,8 @@ const RamaisGeral = () => {
         setAtendedores(response.content);
       }
     })();
-  }, []);
+    //eslint-disable-next-line
+  }, [contaId]);
 
   const excluirRamais = async (e, id) => {
     e.stopPropagation();
@@ -78,9 +79,10 @@ const RamaisGeral = () => {
 
     if (verificarSolicitacao) {
       try {
-        await doRequest("delete", `/Ramais/${id}`);
+        await doRequest("delete", `/Ramal/${id}`);
         const contentFiltrado = data.filter(a => a.id !== id);
         setResponse({ content: contentFiltrado });
+        toast.error("Ramal deletado com sucesso.");
       } catch (err) {}
     }
   };

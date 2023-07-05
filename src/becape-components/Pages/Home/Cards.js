@@ -1,13 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import CardSummary from "../../../components/dashboard/CardSummary";
+
+import { useApiRequest } from "../../hooks/useApiRequest";
+import Cookies from "js-cookie";
+
+/*
 import {
   calcularMinutosSegundos,
   setarHorarios,
   verificarDatas
 } from "../../utils/setarHorarios";
-
+*/
 const Cards = ({ dataChamadas }) => {
+  const contaId = Cookies.get("contaId");
+  const [ramais, setRamais] = useState({ total: 0, online: "-", offline: "-" });
+  const { doRequest } = useApiRequest();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await doRequest("get", `/Conta/${contaId}/ramal`);
+
+        if (response.status === 200 || response.content) {
+          setRamais({ ...ramais, total: response.content.length });
+        }
+      } catch (error) {
+        console.log("Caiu error ramal card");
+      }
+    })();
+    //eslint-disable-next-line
+  }, []);
+
   function verificarAtendidaPerdida(opcao) {
     if (!dataChamadas.content) {
       return 0;
@@ -31,7 +55,7 @@ const Cards = ({ dataChamadas }) => {
     return valor;
   };
 
-  const calcularTempoMedioEspera = tipo => {
+  /* const calcularTempoMedioEspera = tipo => {
     var horaMenor,
       horaMaior = "";
 
@@ -102,7 +126,7 @@ const Cards = ({ dataChamadas }) => {
       return tempoFinal;
     }
     return 0;
-  };
+  }; */
 
   return (
     <>
@@ -123,19 +147,21 @@ const Cards = ({ dataChamadas }) => {
 
         <CardSummary title="" color="info" rate="">
           <div className="d-flex flex-column">
-            <h4>Numero de Ramais: 35</h4>
-            <span className="text-muted fs-1">Online: 30</span>
-            <span className="text-muted fs-1">Offline: 35</span>
+            <h4>Numero de Ramais: {ramais.total}</h4>
+            <span className="text-muted fs-1">Online: {ramais.online}</span>
+            <span className="text-muted fs-1">Offline: {ramais.offline}</span>
           </div>
         </CardSummary>
 
         <CardSummary rate="" title="" color="warning">
           <div className="d-flex flex-column">
             <h4>
-              T. médio de Espera: {calcularTempoMedioEspera("mediaEspera")}
+              T. médio de Espera: -
+              {/* {calcularTempoMedioEspera("mediaEspera")} */}
             </h4>
             <span className="text-muted fs-1">
-              T. médio das chamadas: {calcularTempoMedioEspera("mediaChamadas")}
+              T. médio das chamadas: -
+              {/* {calcularTempoMedioEspera("mediaChamadas")} */}
             </span>
             <span className="text-muted fs-1">
               T médio das chamadas por hora: -
