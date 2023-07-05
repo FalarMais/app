@@ -138,8 +138,8 @@ const ConfigUra = () => {
                 <thead>
                   <tr>
                     <th>Descrição</th>
-                    <th>Audio ou texto</th>
-                    <th>Audio ou texto error</th>
+                    <th>Áudio ou texto</th>
+                    <th>Áudio ou texto error</th>
                     <th>Discagem direta</th>
                     <th />
                   </tr>
@@ -148,8 +148,8 @@ const ConfigUra = () => {
                   {data.map((d, i) => (
                     <tr key={i} onClick={() => editarUra(d)}>
                       <td>{d.descrição}</td>
-                      <td>{String(d.audioOuTexto)}</td>
-                      <td>{String(d.audioOuTextoErro)}</td>
+                      <td>{d.audioOuTexto ? "Áudio" : "Texto"}</td>
+                      <td>{d.audioOuTextoErro ? "Áudio" : "Texto"}</td>
                       <td>{d.discagemDireta ? "Sim" : "Não"}</td>
                       <td>
                         <div
