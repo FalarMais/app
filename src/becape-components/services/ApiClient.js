@@ -42,11 +42,13 @@ class ApiClient {
         response.data.message
       );
     } catch (error) {
+      console.log(error);
+
       return new ApiResponse(
-        error.data.statusCode,
-        error.data.content,
-        error.data.errors,
-        error.data.message
+        error.response.data.statusCode,
+        error.response.data.content,
+        error.response.data.errors,
+        error.response.data.message
       );
     }
   }
@@ -62,10 +64,10 @@ class ApiClient {
       );
     } catch (error) {
       return new ApiResponse(
-        error.data.statusCode,
-        error.data.content,
-        error.data.errors,
-        error.data.message
+        error.response.data.statusCode,
+        error.response.data.content,
+        error.response.data.errors,
+        error.response.data.message
       );
     }
   }
@@ -81,10 +83,10 @@ class ApiClient {
       );
     } catch (error) {
       return new ApiResponse(
-        error.data.statusCode,
-        error.data.content,
-        error.data.errors,
-        error.data.message
+        error.response.data.statusCode,
+        error.response.data.content,
+        error.response.data.errors,
+        error.response.data.message
       );
     }
   }
@@ -100,10 +102,10 @@ class ApiClient {
       );
     } catch (error) {
       return new ApiResponse(
-        error.data.statusCode,
-        error.data.content,
-        error.data.errors,
-        error.data.message
+        error.response.data.statusCode,
+        error.response.data.content,
+        error.response.data.errors,
+        error.response.data.message
       );
     }
   }
