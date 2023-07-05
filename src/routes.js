@@ -458,10 +458,7 @@ export function registrarRotas() {
       name: "Ramais",
       icon: "comments",
       exact: true,
-      children: [
-        { to: "/ramais/geral", name: "Geral" },
-        { to: "/ramais/cadastro-ramais", name: "Cadastro de Ramais" }
-      ]
+      to: "/ramais/geral"
     };
 
     configuracao = {
@@ -469,7 +466,6 @@ export function registrarRotas() {
       exact: true,
       icon: "plug",
       children: [
-        { to: "/configuracoes/atendentes", name: "Atendentes" },
         {
           to: "/configuracoes/horarios-agenda-turno",
           name: "Horários / Agenda / Turno"
