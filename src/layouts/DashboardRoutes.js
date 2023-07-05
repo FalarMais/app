@@ -13,6 +13,8 @@ import { PermissaoRamais } from "../becape-components/Pages/PermissaoRamais";
 import { ConfigUra } from "../becape-components/Pages/Ura/ConfigUra";
 import { Atendedor } from "../becape-components/Pages/Atendentes";
 import { Conta } from "../becape-components/Pages/Conta";
+import { Registrar } from "../becape-components/Pages/Registrar";
+import { AgendaNumeros } from "../becape-components/Pages/AgendaNumeros";
 
 // import { Ura } from "../becape-components/Pages/Ura";
 // import Alerts from '../components/bootstrap-components/Alerts';
@@ -187,6 +189,7 @@ const DashboardRoutes = () => (
       exact
       component={Cookies.get("perfil") === "adm" ? Home : Operador}
     />
+    <Route path="/registrar" exact component={Registrar} />
 
     <PrivateRoute path="/configuracoes/ura" exact component={ConfigUra} />
     <PrivateRoute path="/permissao-ramais" exact component={PermissaoRamais} />
@@ -202,6 +205,11 @@ const DashboardRoutes = () => (
       component={FilaAtendimento}
     />
     <PrivateRoute path="/configuracoes/atendedor" exact component={Atendedor} />
+    <PrivateRoute
+      path="/configuracoes/horarios-agenda-turno"
+      exact
+      component={AgendaNumeros}
+    />
 
     <PrivateRoute path="/novo-cadastro" exact component={NovoCadastro} />
     <PrivateRoute
