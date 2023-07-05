@@ -124,9 +124,9 @@ const Atendedor = () => {
                     <tr key={i} onClick={() => editarAtendedor(d)}>
                       <td>{d.nome}</td>
                       <td>{d.tipoAtendimento}</td>
-                      <td>{String(d.informarPosicao)}</td>
-                      <td>{String(d.informarTempoEspera)}</td>
-                      <td>{String(d.desligarFimMusica)}</td>
+                      <td>{d.informarPosicao ? "Sim" : "Não"}</td>
+                      <td>{d.informarTempoEspera ? "Sim" : "Não"}</td>
+                      <td>{d.desligarFimMusica ? "Sim" : "Não"}</td>
                       <td>
                         <div
                           onClick={e => excluirAtendedor(e, d.id)}

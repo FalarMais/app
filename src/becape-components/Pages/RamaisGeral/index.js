@@ -87,6 +87,18 @@ const RamaisGeral = () => {
     }
   };
 
+  const verificarTipoRamal = tipo => {
+    switch (tipo) {
+      case 0:
+        return "Padrão";
+      case 1:
+        return "Softphone";
+      case 2:
+        return "Cisco";
+      default:
+        return "-";
+    }
+  };
   return (
     <Card>
       <FalconCardHeader title={`Geral`} titleClass="text-falar">
@@ -132,7 +144,7 @@ const RamaisGeral = () => {
                       onClick={() => setRamal(ramal !== d ? d : null)}
                     >
                       <td>{d.nomeUtilizador}</td>
-                      <td>{d.tipo}</td>
+                      <td>{verificarTipoRamal(d.tipo)}</td>
                       <td>{d.modelo}</td>
                       <td>{d.mac}</td>
                       <td>
