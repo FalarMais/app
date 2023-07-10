@@ -14,16 +14,32 @@ import {
 */
 const Cards = ({ dataChamadas }) => {
   const contaId = Cookies.get("contaId");
-  const [ramais, setRamais] = useState({ total: 0, online: "-", offline: "-" });
+  const [dados, setDados] = useState({
+    totalRamais: 0,
+    onlineRamais: "-",
+    offlineRamais: "-",
+    totalAtendedores: "-",
+    totalUras: "-"
+  });
   const { doRequest } = useApiRequest();
 
   useEffect(() => {
     (async () => {
       try {
         const response = await doRequest("get", `/Conta/${contaId}/ramal`);
+        const responseUra = await doRequest("get", `/Conta/${contaId}/ura`);
+        const responseAtendedores = await doRequest(
+          "get",
+          `/Conta/${contaId}/atendedor`
+        );
 
         if (response.status === 200 || response.content) {
-          setRamais({ ...ramais, total: response.content.length });
+          setDados({
+            ...dados,
+            totalRamais: response.content.length,
+            totalAtendedores: responseAtendedores.content.length,
+            totalUras: responseUra.content.length
+          });
         }
       } catch (error) {
         console.log("Caiu error ramal card");
@@ -147,9 +163,13 @@ const Cards = ({ dataChamadas }) => {
 
         <CardSummary title="" color="info" rate="">
           <div className="d-flex flex-column">
-            <h4>Numero de Ramais: {ramais.total}</h4>
-            <span className="text-muted fs-1">Online: {ramais.online}</span>
-            <span className="text-muted fs-1">Offline: {ramais.offline}</span>
+            <h4>Numero de Ramais: {dados.totalRamais}</h4>
+            <span className="text-muted fs-1">
+              Online: {dados.onlineRamais}
+            </span>
+            <span className="text-muted fs-1">
+              Offline: {dados.offlineRamais}
+            </span>
           </div>
         </CardSummary>
 
@@ -179,7 +199,8 @@ const Cards = ({ dataChamadas }) => {
         </CardSummary>
 
         <CardSummary rate="" title="" color="">
-          <h5>Operadores: 4</h5>
+          <h5>Atendedores: {dados.totalAtendedores}</h5>
+          <h5>Uras: {dados.totalUras}</h5>
         </CardSummary>
 
         <CardSummary rate="" title="" color="">
