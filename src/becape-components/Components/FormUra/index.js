@@ -134,7 +134,7 @@ const FormUra = ({ tipo, data, refetch, atendedores = [] }) => {
                 className="mr-1"
               />
               <textarea
-                required
+                required={formURA.audioOuTexto === false && true}
                 type="text"
                 className="form-control"
                 onChange={e => handleForm(e)}
@@ -163,7 +163,7 @@ const FormUra = ({ tipo, data, refetch, atendedores = [] }) => {
                 className="mr-1"
               />
               <textarea
-                required
+                required={formURA.audioOuTextoErro === false && true}
                 type="text"
                 className="form-control"
                 onChange={e => handleForm(e)}
