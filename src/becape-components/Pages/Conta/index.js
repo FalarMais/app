@@ -52,6 +52,7 @@ const Conta = () => {
         `/Conta/${contaId}`,
         formConta
       );
+      console.log(formConta);
       if (atualizarResponse.status === 202) {
         toast.success("Conta atualizada com sucesso!");
       }
@@ -173,9 +174,10 @@ const Conta = () => {
                   theme="textmate"
                   enableLiveAutocompletion={true}
                   name="template-sip"
-                  value="/**
-teste
-                 "
+                  value={formConta.templateSIP}
+                  onChange={newValue =>
+                    setFormConta({ ...formConta, templateSIP: newValue })
+                  }
                   onv
                   editorProps={{ $blockScrolling: true }}
                 />
@@ -191,12 +193,15 @@ teste
                   className="form-control"
                   onChange={e => handleForm(e)}
                   name="templateSIP"
-                  value={formConta.templateSIP ? null : ""}
                 /> */}
                 <AceEditor
                   mode="javascript"
                   theme="textmate"
+                  value={formConta.templateExtension}
                   enableLiveAutocompletion={true}
+                  onChange={newValue =>
+                    setFormConta({ ...formConta, templateExtension: newValue })
+                  }
                   name="template-extension"
                   editorProps={{ $blockScrolling: true }}
                 />
