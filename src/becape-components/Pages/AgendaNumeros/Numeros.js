@@ -13,7 +13,7 @@ const Numeros = () => {
   const { doRequest } = useApiRequest();
   const contaId = Cookies.get("contaId");
   const { response, setResponse, refetch, isLoading } = useApiRequestEffect(
-    `/Numero`
+    `/Conta/${contaId}/numero`
   );
 
   useInicializarTabela(data);
@@ -121,7 +121,7 @@ const Numeros = () => {
                     <td>{d.number}</td>
                     <td>{d.host}</td>
                     <td>{d.name}</td>
-                    <td>{String(d.registro)}</td>
+                    <td>{d.registro ? "Sim" : "Não"}</td>
                     <td>
                       <div
                         onClick={e => excluirNumero(e, d.id)}
