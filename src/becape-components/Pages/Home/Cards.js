@@ -26,20 +26,20 @@ const Cards = ({ dataChamadas }) => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await doRequest("get", `/Conta/${contaId}/ramal`);
-        const responseUra = await doRequest("get", `/Conta/${contaId}/ura`);
-        const responseAtendedores = await doRequest(
-          "get",
-          `/Conta/${contaId}/atendedor`
-        );
+        const [response, responseUra, responseAtendedores] = await Promise.all([
+          doRequest("get", `/Conta/${contaId}/ramal`),
+          doRequest("get", `/Conta/${contaId}/ura`),
+          doRequest("get", `/Conta/${contaId}/atendedor`)
+        ]);
 
         if (response.status === 200 || response.content) {
-          setDados({
+          const novosDados = {
             ...dados,
             totalRamais: response.content.length,
             totalAtendedores: responseAtendedores.content.length,
             totalUras: responseUra.content.length
-          });
+          };
+          setDados(novosDados);
         }
       } catch (error) {
         console.log("Caiu error ramal card");
