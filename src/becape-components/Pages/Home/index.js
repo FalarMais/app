@@ -12,6 +12,7 @@ import axios from "axios";
 const hoje = moment().format("YYYY-MM-DD");
 const Home = () => {
   const contaId = Cookies.get("contaId");
+  const context = Cookies.get("context");
   const [datas, setDatas] = useState(hoje);
   const [response, setResponse] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -27,7 +28,9 @@ const Home = () => {
         datas
       };
       const response = await axios.get(
-        `http://165.22.184.175/conta-data?contaId=${contaId}&datainicio=0001-01-01&datafim=0001-01-01`,
+        `http://165.22.184.175/conta-data?contaId=${context}&datainicio=${moment(
+          datas
+        ).format("MM-DD-YYYY")}`,
         dataPost
       );
       setResponse(response.data);
