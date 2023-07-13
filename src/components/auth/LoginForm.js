@@ -33,10 +33,15 @@ const LoginForm = ({ setRedirect, hasLabel, layout }) => {
       console.log(responsePost);
       if (responsePost.status === 200) {
         const { email, contaId } = responsePost.content;
+
+        const responseContext = await doRequest("get", `/Conta/${contaId}`);
+        const { context } = responseContext.content;
         console.log(responsePost);
 
         Cookies.set("acesso", true, { expires: 1 });
         Cookies.set("contaId", contaId, { expires: 1 });
+        Cookies.set("context", context, { expires: 1 });
+
         Cookies.set("perfil", "adm", { expires: 1 });
 
         registrarRotas();
