@@ -9,22 +9,21 @@ import Cookies from "js-cookie";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import moment from "moment";
 const Historico = () => {
   const [response, setResponse] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const contaId = Cookies.get("contaId");
+  const context = Cookies.get("context");
 
   const history = useHistory();
 
   useEffect(() => {
     (async () => {
       try {
-        const dataPost = {
-          contaId
-        };
         const response = await axios.get(
-          `http://165.22.184.175/conta-data?contaId=${contaId}&datainicio=0001-01-01&datafim=0001-01-01`,
-          dataPost
+          `http://165.22.184.175/conta-data?contaId=${context}&datainicio=${moment().format(
+            "MM-DD-YYYY"
+          )}`
         );
         setResponse(response.data);
         setIsLoading(false);
