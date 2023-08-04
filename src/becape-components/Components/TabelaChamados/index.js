@@ -7,6 +7,8 @@ import { useInicializarTabela } from "../../hooks/useInicializarTabela";
 import "./tabela.css";
 import { useApiRequest } from "../../hooks/useApiRequest";
 import audioFile from "./audio.mp3";
+import moment from "moment";
+import { verificarDatas } from "../../utils/setarHorarios";
 /*
 import {
   calcularMinutosSegundos,
@@ -27,7 +29,8 @@ const TabelaChamados = ({ tipo, dataChamadas, setDataChamadas, isLoading }) => {
 
     if (dataChamadas.content) {
       const chamadasOrdenadas = [...dataChamadas.content].sort(
-        (a, b) => new Date(b.data).getTime() - new Date(a.data).getTime()
+        (a, b) =>
+          new Date(b.dataInicio).getTime() - new Date(a.dataInicio).getTime()
       );
 
       setData(chamadasOrdenadas);
@@ -56,6 +59,14 @@ const TabelaChamados = ({ tipo, dataChamadas, setDataChamadas, isLoading }) => {
         return "PERDIDA";
       case 2:
         return "ATENDIDA";
+      case 3:
+        return "Respondida";
+      case 4:
+        return "Ocupada";
+      case 5:
+        return "Sem resposta";
+      case 6:
+        return "Falha";
       default:
         return "";
     }
@@ -76,24 +87,27 @@ const TabelaChamados = ({ tipo, dataChamadas, setDataChamadas, isLoading }) => {
     }
   };
 
-  /*const verificarDuracaoChamada = data => {
-    const existeCamposNulos = verificarDatas(
-      data.horaFim,
-      data.horaAtendimento
-    );
+  const verificarDuracaoChamada = data => {
+    const existeCamposNulos = verificarDatas(data.dataInicio, data.horaFim);
     if (existeCamposNulos) {
       return "-";
     }
 
-    const { atendimento, inicio } = setarHorarios(
-      data.horaAtendimento,
-      data.horaFim
+    const dataInicio = new Date(data.dataInicio);
+    const horaFim = new Date(
+      moment(data.horaFim).format("YYYY-MM-DDTHH:mm:ss")
     );
-    const tempoDeEsperaEmMilissegundos = atendimento - inicio;
 
-    const tempoFinal = calcularMinutosSegundos(tempoDeEsperaEmMilissegundos);
-    return tempoFinal;
-  }; */
+    const duracaoEmSegundos = (horaFim.getTime() - dataInicio.getTime()) / 1000;
+    const duracaoEmMinutos = Math.floor(duracaoEmSegundos / 60);
+    const duracaoEmSegundosRestantes = duracaoEmSegundos % 60;
+
+    if (duracaoEmMinutos === 0) {
+      return `${duracaoEmSegundosRestantes}s`;
+    } else {
+      return `${duracaoEmMinutos}m ${duracaoEmSegundosRestantes} s`;
+    }
+  };
 
   const abrirGravacao = async id => {
     const audioEmBinario = await converterBinario();
@@ -166,12 +180,11 @@ const TabelaChamados = ({ tipo, dataChamadas, setDataChamadas, isLoading }) => {
         <table id="example" className="display" style={{ width: "100%" }}>
           <thead>
             <tr>
-              <th>Código</th>
+              <th>Situação</th>
               <th>Origem</th>
               <th>Destino</th>
-              <th>Situação</th>
+              <th>Dia</th>
               <th>H.Ínicio</th>
-              <th>H.Atendimento</th>
               <th>H.Fim</th>
               <th>D.Chamada</th>
               <th />
@@ -180,14 +193,13 @@ const TabelaChamados = ({ tipo, dataChamadas, setDataChamadas, isLoading }) => {
           <tbody>
             {data.map((d, i) => (
               <tr key={i}>
-                <td>{i + 1}</td>
+                <td>{verificarStatus(d.status)}</td>
                 <td>{d.origemChamada}</td>
                 <td>{d.destinoChamada}</td>
-                <td>{verificarStatus(d.status)}</td>
-                <td>{d.horaInicio}</td>
-                <td>{d.horaAtendimento}</td>
-                <td>{d.horaFim}</td>
-                <td> -{/* {verificarDuracaoChamada(d)} */}</td>
+                <td>{moment(d.dataInicio).format("DD/MM")}</td>
+                <td>{moment(d.dataInicio).format("HH:mm:ss")}</td>
+                <td>{moment(d.horaFim).format("HH:mm:ss")}</td>
+                <td> {verificarDuracaoChamada(d)}</td>
                 <td>
                   {d.id ? (
                     <div className="d-flex">
