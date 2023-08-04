@@ -16,6 +16,7 @@ const Grafico = ({ response }) => {
   useEffect(() => {
     const existeChamadas = response.content && response.content.length > 0;
     if (existeChamadas) {
+      console.log(response.content);
       let chamadas = response.content.sort(function(a, b) {
         var dateA = new Date(a.data).getTime();
         var dateB = new Date(b.data).getTime();
@@ -23,8 +24,10 @@ const Grafico = ({ response }) => {
       });
 
       let arrayDatas = [];
+      console.log(response.content[0]);
       for (let i = 0; i < chamadas.length; i++) {
         const data = moment(chamadas[i].data).format("DD/MM");
+        console.log(data);
         const existeData = arrayDatas.find(a => a.data === data);
 
         if (existeData) {
@@ -38,7 +41,7 @@ const Grafico = ({ response }) => {
           arrayDatas.push(info);
         }
       }
-
+      console.log(arrayDatas);
       setData(arrayDatas);
     }
   }, [response]);
@@ -64,7 +67,7 @@ const Grafico = ({ response }) => {
           <Tooltip />
           <Area
             type="monotone"
-            dataKey="quantidadeDia"
+            dataKey="quantidade"
             stroke="#8884d8"
             fill="#8884d8"
           />
