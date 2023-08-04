@@ -4,7 +4,8 @@ import CardSummary from "../../../components/dashboard/CardSummary";
 
 import { useApiRequest } from "../../hooks/useApiRequest";
 import Cookies from "js-cookie";
-
+import moment from "moment";
+import { BsArrowRightShort } from "react-icons/bs";
 /*
 import {
   calcularMinutosSegundos,
@@ -21,6 +22,9 @@ const Cards = ({ dataChamadas }) => {
     totalAtendedores: "-",
     totalUras: "-"
   });
+
+  const [mostrarTempoMedioHora, setMostrarTempoMedioHora] = useState(false);
+  const [tempoMedioHora, setTempoMedioHora] = useState({});
   const { doRequest } = useApiRequest();
 
   useEffect(() => {
@@ -144,6 +148,91 @@ const Cards = ({ dataChamadas }) => {
     return 0;
   }; */
 
+  const calcularTempoMedioChamada = () => {
+    if (!dataChamadas.content) {
+      return 0;
+    }
+
+    const chamadas = dataChamadas.content.map(chamadas => ({
+      ...chamadas,
+      novaDataInicio: new Date(chamadas.dataInicio),
+      novaHoraFim: new Date(
+        moment(chamadas.horaFim).format("YYYY-MM-DDTHH:mm:ss")
+      )
+    }));
+
+    const duracoesEmSegundos = chamadas.map(
+      chamada =>
+        (chamada.novaHoraFim.getTime() - chamada.novaDataInicio.getTime()) /
+        1000
+    );
+    const duracaoMediaEmSegundos =
+      duracoesEmSegundos.reduce((total, duracao) => total + duracao, 0) /
+      chamadas.length;
+    const duracaoMediaEmMinutos = Math.floor(duracaoMediaEmSegundos / 60);
+    const duracaoMediaEmSegundosRestantes = Math.floor(
+      duracaoMediaEmSegundos % 60
+    );
+
+    if (duracaoMediaEmMinutos === 0) {
+      return `${duracaoMediaEmSegundosRestantes}s`;
+    } else {
+      return `${duracaoMediaEmMinutos}m ${duracaoMediaEmSegundosRestantes} s`;
+    }
+  };
+
+  useEffect(() => {
+    if (dataChamadas.content && dataChamadas.content.length > 0) {
+      const chamadas = dataChamadas.content.map(chamadas => ({
+        ...chamadas,
+        novaDataInicio: new Date(chamadas.dataInicio),
+        novaHoraFim: new Date(
+          moment(chamadas.horaFim).format("YYYY-MM-DDTHH:mm:ss")
+        )
+      }));
+
+      const duracoesPorHora = {};
+      chamadas.forEach(chamada => {
+        const hora = chamada.novaDataInicio.getHours();
+        const duracaoEmSegundos =
+          (chamada.novaHoraFim.getTime() - chamada.novaDataInicio.getTime()) /
+          1000;
+        if (!duracoesPorHora[hora]) {
+          duracoesPorHora[hora] = [duracaoEmSegundos];
+        } else {
+          duracoesPorHora[hora].push(duracaoEmSegundos);
+        }
+      });
+
+      const duracoesMediasPorHora = {};
+      for (let hora in duracoesPorHora) {
+        const duracoesEmSegundos = duracoesPorHora[hora];
+        const duracaoMediaEmSegundos =
+          duracoesEmSegundos.reduce((total, duracao) => total + duracao, 0) /
+          duracoesEmSegundos.length;
+        const duracaoMediaEmMinutos = Math.floor(duracaoMediaEmSegundos / 60);
+        const duracaoMediaEmSegundosRestantes = Math.floor(
+          duracaoMediaEmSegundos % 60
+        );
+        duracoesMediasPorHora[
+          hora
+        ] = `${duracaoMediaEmMinutos}m${duracaoMediaEmSegundosRestantes}s`;
+      }
+
+      setTempoMedioHora(duracoesMediasPorHora);
+      console.log(duracoesMediasPorHora);
+      // const duracoesMediasEmSegundos =
+      //   Object.values(duracoesPorHora)
+      //     .flat()
+      //     .reduce((total, duracao) => total + duracao, 0) / chamadas.length;
+      // const duracoesMediasEmMinutos = Math.floor(duracoesMediasEmSegundos / 60);
+      // const duracoesMediasEmSegundosRestantes = Math.floor(
+      //   duracoesMediasEmSegundos % 60
+      // );
+
+      // return `${duracoesMediasEmMinutos}m ${duracoesMediasEmSegundosRestantes}s`;
+    }
+  }, [dataChamadas]);
   return (
     <>
       <div className="card-deck">
@@ -180,12 +269,24 @@ const Cards = ({ dataChamadas }) => {
               {/* {calcularTempoMedioEspera("mediaEspera")} */}
             </h4>
             <span className="text-muted fs-1">
-              T. médio das chamadas: -
-              {/* {calcularTempoMedioEspera("mediaChamadas")} */}
+              T. médio das chamadas: {calcularTempoMedioChamada()}
             </span>
-            <span className="text-muted fs-1">
-              T médio das chamadas por hora: -
-            </span>
+            <btn
+              className="text-muted fs-1 ms-houver"
+              onClick={() => setMostrarTempoMedioHora(!mostrarTempoMedioHora)}
+            >
+              T.médio por hora <BsArrowRightShort size={30} />
+            </btn>
+
+            {mostrarTempoMedioHora ? (
+              <div className="my-2">
+                {Object.entries(tempoMedioHora).map(([key, value]) => (
+                  <div className="text-muted fs-1" key={key}>
+                    {key}h: {value}
+                  </div>
+                ))}
+              </div>
+            ) : null}
           </div>
         </CardSummary>
 
@@ -195,7 +296,9 @@ const Cards = ({ dataChamadas }) => {
       </div>
       <div className="card-deck">
         <CardSummary rate="" title="" color="0">
-          <h5>Em atedimento: {verificarAtendimentoEspera("horaFim")}</h5>
+          <h5>
+            Em atedimento: -{/* {verificarAtendimentoEspera("horaFim")} */}
+          </h5>
         </CardSummary>
 
         <CardSummary rate="" title="" color="">
@@ -205,7 +308,8 @@ const Cards = ({ dataChamadas }) => {
 
         <CardSummary rate="" title="" color="">
           <h5>
-            Ligações em espera: {verificarAtendimentoEspera("horaAtendimento")}
+            Ligações em espera: -
+            {/* {verificarAtendimentoEspera("horaAtendimento")} */}
           </h5>
         </CardSummary>
       </div>
