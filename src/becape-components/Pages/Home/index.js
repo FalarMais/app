@@ -27,10 +27,10 @@ const Home = () => {
         contaId,
         datas
       };
+      console.log(datas, moment(datas).format("MM-DD-YYYY"));
+      const dataFormatada = moment(datas).format("MM-DD-YYYY");
       const response = await axios.get(
-        `http://165.22.184.175/conta-data?contaId=${context}&datainicio=${moment(
-          datas
-        ).format("MM-DD-YYYY")}`,
+        `http://165.22.184.175/conta-data?contaId=${context}&datainicial=${dataFormatada}`,
         dataPost
       );
       setResponse(response.data);
@@ -55,7 +55,7 @@ const Home = () => {
       momentt,
       moment()
         .subtract(1, "days")
-        .format("DD-MM-YYYY")
+        .format("MM-DD-YYYY")
     );
   }, []);
 
@@ -67,7 +67,7 @@ const Home = () => {
     } else {
       const novaData = moment()
         .subtract(dia, "days")
-        .format("DD-MM-YYYY");
+        .format("MM-DD-YYYY");
       setDatas(novaData);
     }
   };

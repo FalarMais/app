@@ -1,11 +1,17 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import rocket from "../../assets/img/illustrations/rocket.png";
+import Cookies from "js-cookie";
 
 const LogoutContent = ({ layout, titleTag: TitleTag }) => {
+  useEffect(() => {
+    Cookies.remove("context");
+    Cookies.remove("context");
+    Cookies.remove("acesso");
+  }, []);
   return (
     <Fragment>
       <img
