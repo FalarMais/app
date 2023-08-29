@@ -2,6 +2,9 @@
   background-color: #6F00B4;
 }
 
+.ms-houver:hover{
+  cursor: pointer;
+}
 .text-falar {
   color: #6F00B4;
 }
