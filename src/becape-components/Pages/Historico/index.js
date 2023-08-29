@@ -85,6 +85,7 @@ const Historico = () => {
                 <AiOutlineClear
                   size={20}
                   color="#6F00B4"
+                  className="ms-houver"
                   onClick={() => setFiltros({ ...filtros, dataInicial: "" })}
                 />
               </label>
@@ -105,6 +106,7 @@ const Historico = () => {
                 <AiOutlineClear
                   size={20}
                   color="#6F00B4"
+                  className="ms-houver"
                   onClick={() => setFiltros({ ...filtros, dataFinal: "" })}
                 />
               </label>
